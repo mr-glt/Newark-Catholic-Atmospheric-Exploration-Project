@@ -92,6 +92,30 @@ unsigned long startTime;
 char comment[3]={
   ' ', ' ', '\0'};
 
+void setupGPS() {
+  // Turning off all GPS NMEA strings apart on the uBlox module
+  // Taken from Project Swift (rather than the old way of sending ascii text)
+  int gps_set_sucess=0;
+  uint8_t setNMEAoff[] = {
+    0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x80, 0x25, 0x00, 0x00, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA0, 0xA9           };
+  sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
+  while(!gps_set_sucess)
+  {
+    sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
+    gps_set_sucess=getUBX_ACK(setNMEAoff);
+    if(!gps_set_sucess)
+    {
+      blinkled(2);
+    }
+  }
+  wait(500);
+  setGPS_GNSS();
+  wait(500);
+  setGPS_DynamicModel6();
+  wait(500);
+  setGps_MaxPerformanceMode();
+  wait(500);
+}
 
 void setup()  { 
   pinMode(MTX2_TXD, OUTPUT);
@@ -368,30 +392,6 @@ void sendUBX(uint8_t *MSG, uint8_t len) {
   for(int i=0; i<len; i++) {
     Serial.write(MSG[i]);
   }
-}
-void setupGPS() {
-  // Turning off all GPS NMEA strings apart on the uBlox module
-  // Taken from Project Swift (rather than the old way of sending ascii text)
-  int gps_set_sucess=0;
-  uint8_t setNMEAoff[] = {
-    0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x80, 0x25, 0x00, 0x00, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA0, 0xA9           };
-  sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
-  while(!gps_set_sucess)
-  {
-    sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
-    gps_set_sucess=getUBX_ACK(setNMEAoff);
-    if(!gps_set_sucess)
-    {
-      blinkled(2);
-    }
-  }
-  wait(500);
-  setGPS_GNSS();
-  wait(500);
-  setGPS_DynamicModel6();
-  wait(500);
-  setGps_MaxPerformanceMode();
-  wait(500);
 }
 
 void setGPS_DynamicModel6()
