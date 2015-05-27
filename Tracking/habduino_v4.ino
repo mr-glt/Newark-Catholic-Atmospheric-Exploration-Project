@@ -9,8 +9,8 @@ char callsign[9] = "HABDUINO";  // MAX 9 CHARACTERS!!
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-#include <OneWire.h>
-#include <DallasTemperature.h>
+#include <OneWire/OneWire.h>
+#include <DallasTemperature/DallasTemperature.h>
 #include <SoftwareSerial.h>
 #include "ax25modem.h"
 static const uint8_t PROGMEM _sine_table[] = {
