@@ -2,7 +2,7 @@
 #include <SD.h>
 #include "Wire.h"
 
-//Definations
+//Definitions
 #define DS1307_ADDRESS 0x86;//Need to get updated I2C Address
 byte zero = 0x00; //Needed as a workaround for issue #537 RTC Support
 File testFile;
@@ -21,7 +21,7 @@ void setup(){
 }
 
 void loop(){
-	//This is testing writing to a file on the sdcard
+	/*This is testing writing to a file on the sdcard
 	testFile = SD.open("test.txt", FILE_WRITE);
 
 	if (testFile) {
@@ -34,8 +34,9 @@ void loop(){
     	// if the file didn't open, print an error:
     	Serial.println("error opening test.txt");
   	}
-
-  	//This is for testing the RTC
+	*/
+  	/*
+  	//This is for testing the RTC and printing to serial
   	Wire.beginTransmission(DS1307_ADDRESS);
  	Wire.write(zero); //Workaround	
    	Wire.endTransmission();
@@ -62,4 +63,5 @@ void loop(){
   	Serial.print(minute);
   	Serial.print(":");
   	Serial.print(second);
+  	*/
 }
