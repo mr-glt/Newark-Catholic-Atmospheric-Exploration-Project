@@ -3,6 +3,7 @@
 #include "Wire.h"
 
 //Definitions
+int ledPin = 5;
 #define DS1307_ADDRESS 0x86;//Need to get updated I2C Address
 byte zero = 0x00; //Needed as a workaround for issue #537 RTC Support
 File testFile;
@@ -13,15 +14,26 @@ void setup(){
 	Serial.print("Initializing SD card on pin 10...");
 	pinMode(10, OUTPUT);
 	if (!SD.begin(10)) {
-    	Serial.println("SD Initialization Failed!");
-    	return;
+		Serial.println("SD Initialization Failed!");
+		return;
 	}
 	Serial.println("SD Initialization Done.");
+
+	pinMode(ledPin, OUTPUT);
 
 }
 
 void loop(){
+
+	/*This is for flashing the leds
+	digitalWrite(ledPin, HIGH);
+	delay(10);
+	digitalWrite(ledPin, LOW);
+	delay(10);
+	*/
+
 	/*This is testing writing to a file on the sdcard
+
 	testFile = SD.open("test.txt", FILE_WRITE);
 
 	if (testFile) {
@@ -38,7 +50,7 @@ void loop(){
   	/*
   	//This is for testing the RTC and printing to serial
   	Wire.beginTransmission(DS1307_ADDRESS);
- 	Wire.write(zero); //Workaround	
+ 	Wire.write(zero); //Workaround
    	Wire.endTransmission();
 
 	Wire.requestFrom(DS1307_ADDRESS, 7);
