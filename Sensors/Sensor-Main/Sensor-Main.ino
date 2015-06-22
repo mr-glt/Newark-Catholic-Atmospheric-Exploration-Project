@@ -1,3 +1,7 @@
+#include <DS3231.h>
+
+#include <SparkFunTSL2561.h>
+
 //Imports
 #include <SD.h>
 #include "Wire.h"

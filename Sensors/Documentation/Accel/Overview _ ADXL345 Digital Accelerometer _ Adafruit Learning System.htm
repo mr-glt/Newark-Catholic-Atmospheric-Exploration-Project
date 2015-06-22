@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html class="js flexbox canvas canvastext webgl touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths js-ready" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+<script src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/308175db61" type="text/javascript"></script><script src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/nr-632.js"></script><script src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","errorBeacon":"bam.nr-data.net","licenseKey":"308175db61","applicationID":"3238541","transactionName":"cVZXRUFeWghRShtEVlVcSh5AWVkT","queueTime":0,"applicationTime":63,"agent":"js-agent.newrelic.com/nr-632.min.js"}</script>
+<script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={xpid:"UQUGWV5XGwACV1lXAwA="};window.NREUM||(NREUM={}),__nr_require=function(t,e,n){function r(n){if(!e[n]){var o=e[n]={exports:{}};t[n][0].call(o.exports,function(e){var o=t[n][1][e];return r(o?o:e)},o,o.exports)}return e[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<n.length;o++)r(n[o]);return r}({QJf3ax:[function(t,e){function n(t){function e(e,n,a){t&&t(e,n,a),a||(a={});for(var c=s(e),u=c.length,f=i(a,o,r),d=0;u>d;d++)c[d].apply(f,n);return f}function a(t,e){u[t]=s(t).concat(e)}function s(t){return u[t]||[]}function c(){return n(e)}var u={};return{on:a,emit:e,create:c,listeners:s,_events:u}}function r(){return{}}var o="nr@context",i=t("gos");e.exports=n()},{gos:"7eSDFh"}],ee:[function(t,e){e.exports=t("QJf3ax")},{}],3:[function(t){function e(t){try{i.console&&console.log(t)}catch(e){}}var n,r=t("ee"),o=t(1),i={};try{n=localStorage.getItem("__nr_flags").split(","),console&&"function"==typeof console.log&&(i.console=!0,-1!==n.indexOf("dev")&&(i.dev=!0),-1!==n.indexOf("nr_dev")&&(i.nrDev=!0))}catch(a){}i.nrDev&&r.on("internal-error",function(t){e(t.stack)}),i.dev&&r.on("fn-err",function(t,n,r){e(r.stack)}),i.dev&&(e("NR AGENT IN DEVELOPMENT MODE"),e("flags: "+o(i,function(t){return t}).join(", ")))},{1:20,ee:"QJf3ax"}],4:[function(t){function e(t,e,n,i,s){try{c?c-=1:r("err",[s||new UncaughtException(t,e,n)])}catch(u){try{r("ierr",[u,(new Date).getTime(),!0])}catch(f){}}return"function"==typeof a?a.apply(this,o(arguments)):!1}function UncaughtException(t,e,n){this.message=t||"Uncaught error with no additional information",this.sourceURL=e,this.line=n}function n(t){r("err",[t,(new Date).getTime()])}var r=t("handle"),o=t(6),i=t("ee"),a=window.onerror,s=!1,c=0;t("loader").features.err=!0,t(3),window.onerror=e;try{throw new Error}catch(u){"stack"in u&&(t(4),t(5),"addEventListener"in window&&t(1),window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)&&t(2),s=!0)}i.on("fn-start",function(){s&&(c+=1)}),i.on("fn-err",function(t,e,r){s&&(this.thrown=!0,n(r))}),i.on("fn-end",function(){s&&!this.thrown&&c>0&&(c-=1)}),i.on("internal-error",function(t){r("ierr",[t,(new Date).getTime(),!0])})},{1:5,2:8,3:3,4:7,5:6,6:21,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],5:[function(t,e){function n(t){i.inPlace(t,["addEventListener","removeEventListener"],"-",r)}function r(t){return t[1]}var o=(t(1),t("ee").create()),i=t(2)(o),a=t("gos");if(e.exports=o,n(window),"getPrototypeOf"in Object){for(var s=document;s&&!s.hasOwnProperty("addEventListener");)s=Object.getPrototypeOf(s);s&&n(s);for(var c=XMLHttpRequest.prototype;c&&!c.hasOwnProperty("addEventListener");)c=Object.getPrototypeOf(c);c&&n(c)}else XMLHttpRequest.prototype.hasOwnProperty("addEventListener")&&n(XMLHttpRequest.prototype);o.on("addEventListener-start",function(t){if(t[1]){var e=t[1];"function"==typeof e?this.wrapped=t[1]=a(e,"nr@wrapped",function(){return i(e,"fn-",null,e.name||"anonymous")}):"function"==typeof e.handleEvent&&i.inPlace(e,["handleEvent"],"fn-")}}),o.on("removeEventListener-start",function(t){var e=this.wrapped;e&&(t[1]=e)})},{1:21,2:22,ee:"QJf3ax",gos:"7eSDFh"}],6:[function(t,e){var n=(t(2),t("ee").create()),r=t(1)(n);e.exports=n,r.inPlace(window,["requestAnimationFrame","mozRequestAnimationFrame","webkitRequestAnimationFrame","msRequestAnimationFrame"],"raf-"),n.on("raf-start",function(t){t[0]=r(t[0],"fn-")})},{1:22,2:21,ee:"QJf3ax"}],7:[function(t,e){function n(t,e,n){t[0]=o(t[0],"fn-",null,n)}var r=(t(2),t("ee").create()),o=t(1)(r);e.exports=r,o.inPlace(window,["setTimeout","setInterval","setImmediate"],"setTimer-"),r.on("setTimer-start",n)},{1:22,2:21,ee:"QJf3ax"}],8:[function(t,e){function n(){u.inPlace(this,p,"fn-")}function r(t,e){u.inPlace(e,["onreadystatechange"],"fn-")}function o(t,e){return e}function i(t,e){for(var n in t)e[n]=t[n];return e}var a=t("ee").create(),s=t(1),c=t(2),u=c(a),f=c(s),d=window.XMLHttpRequest,p=["onload","onerror","onabort","onloadstart","onloadend","onprogress","ontimeout"];e.exports=a,window.XMLHttpRequest=function(t){var e=new d(t);try{a.emit("new-xhr",[],e),f.inPlace(e,["addEventListener","removeEventListener"],"-",o),e.addEventListener("readystatechange",n,!1)}catch(r){try{a.emit("internal-error",[r])}catch(i){}}return e},i(d,XMLHttpRequest),XMLHttpRequest.prototype=d.prototype,u.inPlace(XMLHttpRequest.prototype,["open","send"],"-xhr-",o),a.on("send-xhr-start",r),a.on("open-xhr-start",r)},{1:5,2:22,ee:"QJf3ax"}],9:[function(t){function e(t){var e=this.params,r=this.metrics;if(!this.ended){this.ended=!0;for(var i=0;c>i;i++)t.removeEventListener(s[i],this.listener,!1);if(!e.aborted){if(r.duration=(new Date).getTime()-this.startTime,4===t.readyState){e.status=t.status;var a=t.responseType,u="arraybuffer"===a||"blob"===a||"json"===a?t.response:t.responseText,f=n(u);if(f&&(r.rxSize=f),this.sameOrigin){var d=t.getResponseHeader("X-NewRelic-App-Data");d&&(e.cat=d.split(", ").pop())}}else e.status=0;r.cbTime=this.cbTime,o("xhr",[e,r,this.startTime])}}}function n(t){if("string"==typeof t&&t.length)return t.length;if("object"!=typeof t)return void 0;if("undefined"!=typeof ArrayBuffer&&t instanceof ArrayBuffer&&t.byteLength)return t.byteLength;if("undefined"!=typeof Blob&&t instanceof Blob&&t.size)return t.size;if("undefined"!=typeof FormData&&t instanceof FormData)return void 0;try{return JSON.stringify(t).length}catch(e){return void 0}}function r(t,e){var n=i(e),r=t.params;r.host=n.hostname+":"+n.port,r.pathname=n.pathname,t.sameOrigin=n.sameOrigin}if(window.XMLHttpRequest&&XMLHttpRequest.prototype&&XMLHttpRequest.prototype.addEventListener&&!/CriOS/.test(navigator.userAgent)){t("loader").features.xhr=!0;var o=t("handle"),i=t(2),a=t("ee"),s=["load","error","abort","timeout"],c=s.length,u=t(1);t(4),t(3),a.on("new-xhr",function(){this.totalCbs=0,this.called=0,this.cbTime=0,this.end=e,this.ended=!1,this.xhrGuids={}}),a.on("open-xhr-start",function(t){this.params={method:t[0]},r(this,t[1]),this.metrics={}}),a.on("open-xhr-end",function(t,e){"loader_config"in NREUM&&"xpid"in NREUM.loader_config&&this.sameOrigin&&e.setRequestHeader("X-NewRelic-ID",NREUM.loader_config.xpid)}),a.on("send-xhr-start",function(t,e){var r=this.metrics,o=t[0],i=this;if(r&&o){var u=n(o);u&&(r.txSize=u)}this.startTime=(new Date).getTime(),this.listener=function(t){try{"abort"===t.type&&(i.params.aborted=!0),("load"!==t.type||i.called===i.totalCbs&&(i.onloadCalled||"function"!=typeof e.onload))&&i.end(e)}catch(n){try{a.emit("internal-error",[n])}catch(r){}}};for(var f=0;c>f;f++)e.addEventListener(s[f],this.listener,!1)}),a.on("xhr-cb-time",function(t,e,n){this.cbTime+=t,e?this.onloadCalled=!0:this.called+=1,this.called!==this.totalCbs||!this.onloadCalled&&"function"==typeof n.onload||this.end(n)}),a.on("xhr-load-added",function(t,e){var n=""+u(t)+!!e;this.xhrGuids&&!this.xhrGuids[n]&&(this.xhrGuids[n]=!0,this.totalCbs+=1)}),a.on("xhr-load-removed",function(t,e){var n=""+u(t)+!!e;this.xhrGuids&&this.xhrGuids[n]&&(delete this.xhrGuids[n],this.totalCbs-=1)}),a.on("addEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-added",[t[1],t[2]],e)}),a.on("removeEventListener-end",function(t,e){e instanceof XMLHttpRequest&&"load"===t[0]&&a.emit("xhr-load-removed",[t[1],t[2]],e)}),a.on("fn-start",function(t,e,n){e instanceof XMLHttpRequest&&("onload"===n&&(this.onload=!0),("load"===(t[0]&&t[0].type)||this.onload)&&(this.xhrCbStart=(new Date).getTime()))}),a.on("fn-end",function(t,e){this.xhrCbStart&&a.emit("xhr-cb-time",[(new Date).getTime()-this.xhrCbStart,this.onload,e],e)})}},{1:"XL7HBI",2:10,3:8,4:5,ee:"QJf3ax",handle:"D5DuLP",loader:"G9z0Bl"}],10:[function(t,e){e.exports=function(t){var e=document.createElement("a"),n=window.location,r={};e.href=t,r.port=e.port;var o=e.href.split("://");return!r.port&&o[1]&&(r.port=o[1].split("/")[0].split("@").pop().split(":")[1]),r.port&&"0"!==r.port||(r.port="https"===o[0]?"443":"80"),r.hostname=e.hostname||n.hostname,r.pathname=e.pathname,r.protocol=o[0],"/"!==r.pathname.charAt(0)&&(r.pathname="/"+r.pathname),r.sameOrigin=!e.hostname||e.hostname===document.domain&&e.port===n.port&&e.protocol===n.protocol,r}},{}],11:[function(t,e){function n(t){return function(){r(t,[(new Date).getTime()].concat(i(arguments)))}}var r=t("handle"),o=t(1),i=t(2);"undefined"==typeof window.newrelic&&(newrelic=window.NREUM);var a=["setPageViewName","addPageAction","setCustomAttribute","finished","addToTrace","inlineHit","noticeError"];o(a,function(t,e){window.NREUM[e]=n("api-"+e)}),e.exports=window.NREUM},{1:20,2:21,handle:"D5DuLP"}],"7eSDFh":[function(t,e){function n(t,e,n){if(r.call(t,e))return t[e];var o=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(t,e,{value:o,writable:!0,enumerable:!1}),o}catch(i){}return t[e]=o,o}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],gos:[function(t,e){e.exports=t("7eSDFh")},{}],handle:[function(t,e){e.exports=t("D5DuLP")},{}],D5DuLP:[function(t,e){function n(t,e,n){return r.listeners(t).length?r.emit(t,e,n):(o[t]||(o[t]=[]),void o[t].push(e))}var r=t("ee").create(),o={};e.exports=n,n.ee=r,r.q=o},{ee:"QJf3ax"}],id:[function(t,e){e.exports=t("XL7HBI")},{}],XL7HBI:[function(t,e){function n(t){var e=typeof t;return!t||"object"!==e&&"function"!==e?-1:t===window?0:i(t,o,function(){return r++})}var r=1,o="nr@id",i=t("gos");e.exports=n},{gos:"7eSDFh"}],G9z0Bl:[function(t,e){function n(){var t=p.info=NREUM.info,e=u.getElementsByTagName("script")[0];if(t&&t.licenseKey&&t.applicationID&&e){s(d,function(e,n){e in t||(t[e]=n)});var n="https"===f.split(":")[0]||t.sslForHttp;p.proto=n?"https://":"http://",a("mark",["onload",i()]);var r=u.createElement("script");r.src=p.proto+t.agent,e.parentNode.insertBefore(r,e)}}function r(){"complete"===u.readyState&&o()}function o(){a("mark",["domContent",i()])}function i(){return(new Date).getTime()}var a=t("handle"),s=t(1),c=(t(2),window),u=c.document,f=(""+location).split("?")[0],d={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-632.min.js"},p=e.exports={offset:i(),origin:f,features:{}};u.addEventListener?(u.addEventListener("DOMContentLoaded",o,!1),c.addEventListener("load",n,!1)):(u.attachEvent("onreadystatechange",r),c.attachEvent("onload",n)),a("mark",["firstbyte",i()])},{1:20,2:11,handle:"D5DuLP"}],loader:[function(t,e){e.exports=t("G9z0Bl")},{}],20:[function(t,e){function n(t,e){var n=[],o="",i=0;for(o in t)r.call(t,o)&&(n[i]=e(o,t[o]),i+=1);return n}var r=Object.prototype.hasOwnProperty;e.exports=n},{}],21:[function(t,e){function n(t,e,n){e||(e=0),"undefined"==typeof n&&(n=t?t.length:0);for(var r=-1,o=n-e||0,i=Array(0>o?0:o);++r<o;)i[r]=t[e+r];return i}e.exports=n},{}],22:[function(t,e){function n(t){return!(t&&"function"==typeof t&&t.apply&&!t[i])}var r=t("ee"),o=t(1),i="nr@wrapper",a=Object.prototype.hasOwnProperty;e.exports=function(t){function e(t,e,r,a){function nrWrapper(){var n,i,s,u;try{i=this,n=o(arguments),s=r&&r(n,i)||{}}catch(d){f([d,"",[n,i,a],s])}c(e+"start",[n,i,a],s);try{return u=t.apply(i,n)}catch(p){throw c(e+"err",[n,i,p],s),p}finally{c(e+"end",[n,i,u],s)}}return n(t)?t:(e||(e=""),nrWrapper[i]=!0,u(t,nrWrapper),nrWrapper)}function s(t,r,o,i){o||(o="");var a,s,c,u="-"===o.charAt(0);for(c=0;c<r.length;c++)s=r[c],a=t[s],n(a)||(t[s]=e(a,u?s+o:o,i,s))}function c(e,n,r){try{t.emit(e,n,r)}catch(o){f([o,e,n,r])}}function u(t,e){if(Object.defineProperty&&Object.keys)try{var n=Object.keys(t);return n.forEach(function(n){Object.defineProperty(e,n,{get:function(){return t[n]},set:function(e){return t[n]=e,e}})}),e}catch(r){f([r])}for(var o in t)a.call(t,o)&&(e[o]=t[o]);return e}function f(e){try{t.emit("internal-error",e)}catch(n){}}return t||(t=r),e.inPlace=s,e.flag=i,e}},{1:21,ee:"QJf3ax"}]},{},["G9z0Bl",4,9]);</script>
+  <link rel="shortcut icon" type="image/x-icon" href="https://learn.adafruit.com/assets/favicon-696a0b5cd823eab41c6ed2fec0070b78.ico">
+    <title>Overview | ADXL345 Digital Accelerometer | Adafruit Learning System</title>
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="x2KSiM0pIiNqbuDhMK2RZ2h1DdWRPCL/Uz4JVfYEBy53deQK8L3F9jih5sNvJZ1vwcU/9EZEf/+3jgPwTvZWCQ==">
+  <link rel="alternate" type="application/atom+xml" title="ATOM" href="https://learn.adafruit.com/feed">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://learn.adafruit.com/feed.rss">
+  <link rel="stylesheet" media="screen" href="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/fonts.css">
+  <link rel="stylesheet" media="screen" href="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/application-950e4a7a497edfa85e26f2c3150478ea.css">
+  <!--[if lt IE 9]>
+    <script src="/assets/ie.html5.js"></script>
+    <script src="/assets/ie.respond.js"></script>
+  <![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@adafruit">
+  <meta name="twitter:title" content="ADXL345 Digital Accelerometer">
+  <meta name="twitter:description" content="Triple-axis accelerometer breakout with a digital interface.">
+  <meta name="twitter:image:src" content="https://learn.adafruit.com/system/guides/images/000/000/247/medium800/2013_03_24_IMG_1453-1024.jpg">
+  <meta name="twitter:domain" content="https://learn.adafruit.com">
+
+  <link rel="canonical" href="https://learn.adafruit.com/adxl345-digital-accelerometer/overview">
+<style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+
+<body class="application pages show">
+  <div id="outer-wrapper">
+    <div id="inner-wrapper">
+      
+      <header id="adafruit-header">
+    <div id="small-header-content" class="container visible-xs">
+    <a id="small-header-menu-button" class="menu-link" href="#small-header-nav">
+      <i class="fa fa-bars"> </i>
+    </a>
+    <div class="small-header-logo">
+      <a href="https://www.adafruit.com/">
+        <img id="small-logo" alt="Adafruit Logo" title="Adafruit" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_logo_small.png" height="50" width="50">
+</a>    </div>
+    <a class="small-header-cart" href="https://www.adafruit.com/shopping_cart">
+      <span class="small-cart-count">7</span>
+      <i class="fa fa-shopping-cart"></i>
+</a>  </div>
+    <nav id="small-header-nav" role="navigation" class="visible-xs">
+      <div class="block">
+        <ul>
+          <li>
+            <div id="small-search-wrapper">
+              <div id="small-search-inner-wrapper">
+                <form action="https://learn.adafruit.com/search" method="get">
+                  <label for="mobile-search" style="display:none;">Search</label>
+                  <input id="mobile-search" name="q" placeholder="Search Adafruit" type="text">
+                  <i class="fa fa-search"></i>
+                </form>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="https://www.adafruit.com/categories">SHOP</a>
+          </li>
+          <li>
+            <a href="https://www.adafruit.com/blog">BLOG</a>
+          </li>
+          <li>
+            <a href="https://learn.adafruit.com/">LEARN</a>
+          </li>
+          <li>
+            <a href="https://forums.adafruit.com/">FORUMS</a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/adafruit">VIDEOS</a>
+          </li>
+            <li>
+              <a href="https://accounts.adafruit.com/">MY ACCOUNT</a>
+            </li>
+            <li>
+              <a rel="nofollow" data-method="delete" href="https://learn.adafruit.com/users/sign_out">SIGN OUT</a>
+            </li>
+          <li>
+            <a class="close-btn" id="small-nav-close-button" href="#top">CLOSE MENU</a>
+          </li>
+        </ul>
+
+    </div>
+  </nav>
+
+  <div id="header-content" class="container hidden-xs">
+    <div id="header-profile">
+      <a id="header-cart" href="https://www.adafruit.com/shopping_cart">7 Items <i class="fa fa-shopping-cart"></i></a>      <div id="account">
+          <span class="name">Hello, Charlie Wade</span> | <a rel="nofollow" data-method="delete" href="https://learn.adafruit.com/users/sign_out">Sign Out</a> | <a href="https://accounts.adafruit.com/">My Account</a>
+      </div>
+      <div id="search-wrapper">
+        <form action="https://learn.adafruit.com/search" method="get">
+          <label for="search" style="display:none;">Search</label>
+          <span style="position: relative; display: inline-block;" class="twitter-typeahead"><input style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background: rgb(0, 0, 0) none repeat scroll 0% 0%;" class="tt-hint" autocomplete="off" spellcheck="off" disabled="disabled" type="text"><input dir="auto" style="position: relative; vertical-align: top; background-color: transparent;" spellcheck="false" autocomplete="off" class="tt-query" id="search" name="q" type="text"><span style="position: absolute; left: -9999px; visibility: hidden; white-space: nowrap; font-family: &quot;Gotham SSm A&quot;,&quot;Gotham SSm B&quot;; font-size: 12px; font-style: normal; font-variant: normal; font-weight: 300; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></span><span style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;" class="tt-dropdown-menu"></span></span>
+          <i class="fa fa-search"></i>
+          <input style="visibility: hidden; position: fixed;" type="submit">
+        </form>
+      </div>
+    </div>
+    <div id="navigation">
+      <a href="https://www.adafruit.com/">
+        <img id="logo" alt="Adafruit Logo" title="Adafruit" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/logo_2x.png" height="60" width="172">
+</a>        <nav class="hover-menu">
+    <ul>
+      <li id="nav-shop"><a href="https://www.adafruit.com/categories">SHOP</a>
+        <div class="flyouts">
+<div class="flyout">
+<div class="container">
+<div class="flyout-content row"><div class="column col-lg-6 col-md-6 col-sm-6">
+<div class="title categories">
+PRODUCT CATEGORIES <br class="hidden-lg"><a href="http://www.adafruit.com/categories">(SEE ALL 28)</a>
+</div>
+<div class="row">
+<div class="col-lg-6 col-md-6 col-sm-6">
+<ul class="links categories"><li><a href="http://www.adafruit.com/category/17">ARDUINO (133)</a></li>
+<li><a href="http://www.adafruit.com/category/105">RASPBERRY PI (309)</a></li>
+<li><a href="http://www.adafruit.com/category/75">BEAGLEBONE (24)</a></li>
+<li><a href="http://www.adafruit.com/category/168">NEOPIXELS (36)</a></li>
+<li><a href="http://www.adafruit.com/category/65">WEARABLES (98)</a></li>
+<li><a href="http://www.adafruit.com/category/290">COSPLAY/COSTUMING (148)</a></li>
+<li><a href="http://www.adafruit.com/category/117">YOUNG ENGINEERS (84)</a></li>
+<li><a href="http://www.adafruit.com/category/82">PROTOTYPING (162)</a></li>
+<li><a href="http://www.adafruit.com/category/307">HALLOWEEN (210)</a></li>
+<li><a href="http://www.adafruit.com/category/203">KITS &amp; PROJECTS (144)</a></li>
+<li><a href="http://www.adafruit.com/category/63">LCDS &amp; DISPLAYS (98)</a></li>
+<li><a href="http://www.adafruit.com/category/328">RESELLER &amp; UNIVERSITY PACKS (2)</a></li>
+<li><a href="http://www.adafruit.com/category/196">BOARDS (171)</a></li>
+<li><a href="http://www.adafruit.com/category/37">LEDS (225)</a></li>
+</ul>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-6">
+<ul class="links"><li><a href="http://www.adafruit.com/category/44">POWER (152)</a></li>
+<li><a href="http://www.adafruit.com/category/33">CABLES (112)</a></li>
+<li><a href="http://www.adafruit.com/category/8">TOOLS (141)</a></li>
+<li><a href="http://www.adafruit.com/category/227">ROBOTICS &amp; CNC (128)</a></li>
+<li><a href="http://www.adafruit.com/category/234">ACCESSORIES (112)</a></li>
+<li><a href="http://www.adafruit.com/category/54">COMPONENTS &amp; PARTS (264)</a></li>
+<li><a href="http://www.adafruit.com/category/35">SENSORS (160)</a></li>
+<li><a href="http://www.adafruit.com/category/50">EL WIRE/TAPE/PANEL (82)</a></li>
+<li><a href="http://www.adafruit.com/category/128">3D PRINTING (57)</a></li>
+<li><a href="http://www.adafruit.com/category/40">BOOKS (84)</a></li>
+<li><a href="http://www.adafruit.com/category/254">SOFTWARE (7)</a></li>
+<li><a href="http://www.adafruit.com/category/112">WIRELESS (76)</a></li>
+<li><a href="http://www.adafruit.com/category/14">GIFT CERTIFICATES (4)</a></li>
+<li><a href="http://www.adafruit.com/category/342">INTERNET OF THINGS - IOT (20)</a></li>
+</ul>
+</div>
+</div>
+</div><div class="column col-lg-3 col-md-3 col-sm-6 new-column">
+<div class="title new">
+NEW PRODUCTS <a href="http://www.adafruit.com/new"><br class="hidden-lg">(SEE ALL 34)</a>
+</div>
+<ul class="links new"><li>
+<a href="http://www.adafruit.com/product/2619"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2619-00.jpg" alt="Pibow Coupé Flotilla - Enclosure for Pi 2 and Model B+"></a>
+<a href="http://www.adafruit.com/product/2619" class="name">Pibow Coupé Flotilla - Enclosure for Pi 2 and Model B+<span class="price">$11.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2616"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2616-00.jpg" alt="PiTFT Plus 320x240 3.2" tft="" +="" resistive="" touchscreen="" -="" pi="" 2="" and="" model="" a+="" b+"=""></a>
+<a href="http://www.adafruit.com/product/2616" class="name">PiTFT Plus 320x240 3.2" TFT + Resistive Touchscreen - Pi 2 and Model A+ / B+<span class="price">$39.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2604"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2604-02.jpg" alt="Pi Foundation Raspberry Pi B+ / Pi 2 Case"></a>
+<a href="http://www.adafruit.com/product/2604" class="name">Pi Foundation Raspberry Pi B+ / Pi 2 Case<span class="price">$9.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2524"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/2524-05.gif" alt="3W-9W RGB LED - Common Anode"></a>
+<a href="http://www.adafruit.com/product/2524" class="name">3W-9W RGB LED - Common Anode<span class="price">$3.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2615"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2615-00.jpg" alt="PM51A - Amprobe Pocket Autoranging Digital Multimeter"></a>
+<a href="http://www.adafruit.com/product/2615" class="name">PM51A - Amprobe Pocket Autoranging Digital Multimeter<span class="price">$39.95</span></a>
+<div class="clear"></div>
+</li></ul>
+</div><div class="column col-lg-3 col-md-3 hidden-sm">
+<div class="title featured">
+FEATURED PRODUCTS <a href="http://www.adafruit.com/featured"><br class="hidden-lg">(SEE ALL 45)</a>
+</div>
+<ul class="links featured"><li>
+<a href="http://www.adafruit.com/product/2468"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2468-01.jpg" alt="Adafruit FONA 800 Shield - Voice/Data Cellular GSM for Arduino"></a>
+<a href="http://www.adafruit.com/product/2468" class="name">Adafruit FONA 800 Shield - Voice/Data Cellular GSM for Arduino<span class="price">$39.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2534"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2534-04.jpg" alt="Adafruit VESA Mount Plus for Raspberry Pi 2 / B+ / A+"></a>
+<a href="http://www.adafruit.com/product/2534" class="name">Adafruit VESA Mount Plus for Raspberry Pi 2 / B+ / A+<span class="price">$9.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2590"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2590-01.jpg" alt="Adafruit Metro Mini 328 - 5V 16MHz"></a>
+<a href="http://www.adafruit.com/product/2590" class="name">Adafruit Metro Mini 328 - 5V 16MHz<span class="price">$14.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2465"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2465-02.jpg" alt="PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A"></a>
+<a href="http://www.adafruit.com/product/2465" class="name">PowerBoost 1000 Charger - Rechargeable 5V Lipo USB Boost @ 1A<span class="price">$19.95</span></a>
+<div class="clear"></div>
+</li><li>
+<a href="http://www.adafruit.com/product/2479"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/x2479-00.jpg" alt="Adafruit Bluefruit LE UART Friend - Bluetooth Low Energy (BLE)"></a>
+<a href="http://www.adafruit.com/product/2479" class="name">Adafruit Bluefruit LE UART Friend - Bluetooth Low Energy (BLE)<span class="price">$19.95</span></a>
+<div class="clear"></div>
+</li> </ul>
+</div></div>
+</div>
+</div>
+</div>
+      </li>
+      <li id="nav-blog"><a href="https://www.adafruit.com/blog">BLOG</a>
+          <div class="flyouts">
+    <div class="flyout">
+      <div class="container">
+        <div class="flyout-content row">
+
+          <div class="column col-lg-6 col-md-6 col-sm-6">
+            <div class="title categories">
+              POPULAR CATEGORIES <br class="hidden-lg"><a href="https://blog.adafruit.com/categories/">(SEE ALL 166)</a>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <ul class="links categories">
+																	<li><a href="https://blog.adafruit.com/category/3d-printing/">3D PRINTING (3245)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/art/">ART (3232)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/raspberry-pi/">RASPBERRY PI (2834)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/random/">RANDOM (2736)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/arduino/">ARDUINO (2210)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/wearables/">WEARABLES (2162)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/science/">SCIENCE (1288)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/robotics/">ROBOTICS (1180)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/ledslcds/">LEDS-LCDS (1177)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/ee/">EE (1120)</a>
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+					              </li></ul></div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <ul class="links categories">
+																																																																													<li><a href="https://blog.adafruit.com/category/maker-business/">MAKER BUSINESS (1085)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/costuming/">COSTUMING (1064)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/announce/">ANNOUNCE (991)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/educators/">EDUCATORS (943)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/cosplay/">COSPLAY (939)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/ask-an-engineer/">ASK-AN-ENGINEER (900)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/community/">COMMUNITY (821)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/opensourcehardware/">OPEN SOURCE HARDWARE (787)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/tutorials/">TUTORIALS (628)</a>
+																	</li><li><a href="https://blog.adafruit.com/category/adafruit-learning-system/">ADAFRUIT LEARNING SYSTEM (530)</a>
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																																																																								
+																	                </li></ul>
+              </div>
+            </div>
+          </div> 
+          <div class="column col-lg-3 col-md-3 col-sm-3">
+			            <div class="title new">
+              NEW POSTS <br class="hidden-lg"><a href="https://blog.adafruit.com/">(SEE ALL)</a>
+            </div>
+            <ul class="links new">
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/21/adafruit-in-walterisaacson-the-innovators-how-a-group-of-hackers-geniuses-and-geeks-created-the-digital-revolution/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_0005-99x150.jpg"></a>						<span class="blog-flyout-datetime">June 21, 2015 at 8:10 am</span>
+						<a href="https://blog.adafruit.com/2015/06/21/adafruit-in-walterisaacson-the-innovators-how-a-group-of-hackers-geniuses-and-geeks-created-the-digital-revolution/" class="name">@adafruit in @WalterIsaacson “The…</a>
+						<div class="clear"></div>
+					</li>
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/21/memories-from-arduino-day-download-the-poster-arduino-teamarduinocc/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/NewImage197-300x225.png"></a>						<span class="blog-flyout-datetime">June 21, 2015 at 3:00 am</span>
+						<a href="https://blog.adafruit.com/2015/06/21/memories-from-arduino-day-download-the-poster-arduino-teamarduinocc/" class="name">Memories from Arduino Day! Download the Poster…</a>
+						<div class="clear"></div>
+					</li>
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/21/make-a-smart-wearable-baby-monitor-with-intel-edison-diy/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/NewImage190-100x150.png"></a>						<span class="blog-flyout-datetime">June 21, 2015 at 2:00 am</span>
+						<a href="https://blog.adafruit.com/2015/06/21/make-a-smart-wearable-baby-monitor-with-intel-edison-diy/" class="name">Make a Smart Wearable Baby Monitor with Intel…</a>
+						<div class="clear"></div>
+					</li>
+				            </ul>
+          </div>
+          <div class="column col-lg-3 col-md-3 col-sm-3">
+			            <div class="title featured">
+              FEATURED POSTS <br class="hidden-lg"><a href="https://blog.adafruit.com/category/featured">(SEE ALL 59)</a>
+            </div>
+            <ul class="links featured">
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/19/state-of-the-fruit-how-fast-is-adafruit-shipping-ups-usps-makerbusiness-same-day-coming-soon/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_4797-300x156.jpg"></a>						<span class="blog-flyout-datetime">June 19, 2015 at 12:53 pm</span>
+						<a href="https://blog.adafruit.com/2015/06/19/state-of-the-fruit-how-fast-is-adafruit-shipping-ups-usps-makerbusiness-same-day-coming-soon/" class="name">State of the fruit – How fast is @adafruit…</a>
+						<div class="clear"></div>
+					</li>
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/19/adafruit-reaches-17-million-youtube-views-thank-you/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_17M_blog-300x101.jpg"></a>						<span class="blog-flyout-datetime">June 19, 2015 at 12:04 pm</span>
+						<a href="https://blog.adafruit.com/2015/06/19/adafruit-reaches-17-million-youtube-views-thank-you/" class="name">Adafruit Reaches 17 Million @YouTube Views –…</a>
+						<div class="clear"></div>
+					</li>
+									<li>
+						<a href="https://blog.adafruit.com/2015/06/19/our-meeting-with-jonathan-jaglom-the-new-ceo-of-makerbot-makerbot-jjaglom-stratasys-adafruit/"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/MB-Logo-Header-2-300x71.jpg"></a>						<span class="blog-flyout-datetime">June 19, 2015 at 9:00 am</span>
+						<a href="https://blog.adafruit.com/2015/06/19/our-meeting-with-jonathan-jaglom-the-new-ceo-of-makerbot-makerbot-jjaglom-stratasys-adafruit/" class="name">Our meeting with Jonathan Jaglom the new CEO of…</a>
+						<div class="clear"></div>
+					</li>
+				            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      </li>
+      <li id="nav-learn"><a href="https://learn.adafruit.com/">LEARN</a>
+          <div class="flyouts">
+    <div class="flyout">
+      <div class="container">
+        <div class="flyout-content row">
+
+          <div class="column col-lg-6 col-md-6 col-sm-6">
+            <div class="title categories">
+              GUIDE CATEGORIES <br class="hidden-lg"><a href="https://learn.adafruit.com/">(SEE ALL 797)</a>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <ul class="links categories">
+                    <li><a href="https://learn.adafruit.com/category/components">COMPONENTS (38)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/sensors">SENSORS (137)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/hacks">HACKS (29)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/microcomputers">MICROCOMPUTERS (10)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/adafruit-products">ADAFRUIT PRODUCTS (222)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/maker-business">MAKER BUSINESS (21)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/projects">PROJECTS (97)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/leds">LEDS (136)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/raspberry-pi">RASPBERRY PI (165)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/braincrafts">BRAINCRAFTS (32)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/lcds-and-displays">LCDS &amp; DISPLAYS (46)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/el">EL WIRE/TAPE/PANEL (11)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/tools">TOOLS (43)</a></li>
+                </ul>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-6">
+                <ul class="links categories">
+                    <li><a href="https://learn.adafruit.com/category/microcontrollers">MICROCONTROLLERS (68)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/learn-arduino">LEARN ARDUINO (38)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/customer-projects">CUSTOMER PROJECTS (17)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/beaglebone">BEAGLEBONE (35)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/circuit-playground">CIRCUIT PLAYGROUND (8)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/3d-printing">3D PRINTING (104)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/trinket">TRINKET (63)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/robotics">ROBOTICS (13)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/collins-lab">COLLIN'S LAB (7)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/community-support">COMMUNITY SUPPORT (19)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/wearables">WEARABLES (134)</a></li>
+                    <li><a href="https://learn.adafruit.com/category/adafruit-io">ADAFRUIT IO (7)</a></li>
+                </ul>
+              </div>
+            </div>
+          </div> 
+          <div class="column col-lg-3 col-md-3 col-sm-3">
+            <div class="title new">
+              NEW GUIDES <br class="hidden-lg"><a href="https://learn.adafruit.com/guides/latest">(SEE ALL 66)</a>
+            </div>
+            <ul class="links new">
+                    <li>
+                      <a href="https://learn.adafruit.com/eeg-costume-cap"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit-brain-cap-closeup-thumb.gif" alt="EEG Costume Cap"></a>
+                      <a href="https://learn.adafruit.com/eeg-costume-cap" class="name">EEG COSTUME CAP</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/portable-kippah-pi"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/hero_top_4_sm.jpg" alt="5&quot; Display Kippah Portable Raspberry Pi"></a>
+                      <a href="https://learn.adafruit.com/portable-kippah-pi" class="name">5" DISPLAY KIPPAH PORTABLE RASPBERRY PI</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/mindfulness-bracelet-thumbnail_002.jpg" alt="Buzzing Mindfulness Bracelet"></a>
+                      <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet" class="name">BUZZING MINDFULNESS BRACELET</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/hero-pitop-sm_002.jpg" alt="Mini Raspberry Pi Handheld Notebook"></a>
+                      <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop" class="name">MINI RASPBERRY PI HANDHELD NOTEBOOK</a>
+                      <div class="clear"></div>
+                    </li>
+            </ul>
+          </div>
+          <div class="column col-lg-3 col-md-3 col-sm-3">
+            <div class="title featured">
+              FEATURED GUIDES <br class="hidden-lg"><a href="https://learn.adafruit.com/guides/featured">(SEE ALL 126)</a>
+            </div>
+            <ul class="links featured">
+                    <li>
+                      <a href="https://learn.adafruit.com/piccolo"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/proto.jpg" alt="Tiny Arduino Music Visualizer"></a>
+                      <a href="https://learn.adafruit.com/piccolo" class="name">TINY ARDUINO MUSIC VISUALIZER</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/glowing-star-chucks"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/glowing-chuck-taylor-all-star-shoes-adafruit-thumb.jpg" alt="Glowing Star Chuck Taylor Sneakers"></a>
+                      <a href="https://learn.adafruit.com/glowing-star-chucks" class="name">GLOWING STAR CHUCK TAYLOR SNEAKERS</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/silicone-robo-tentacle"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/360_trefoil3.gif" alt="Silicone Robo-Tentacle"></a>
+                      <a href="https://learn.adafruit.com/silicone-robo-tentacle" class="name">SILICONE ROBO-TENTACLE</a>
+                      <div class="clear"></div>
+                    </li>
+                    <li>
+                      <a href="https://learn.adafruit.com/neopixel-led-cortana-costume"><img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/cortana-loop.gif" alt="NeoPixel LED Cortana Costume"></a>
+                      <a href="https://learn.adafruit.com/neopixel-led-cortana-costume" class="name">NEOPIXEL LED CORTANA COSTUME</a>
+                      <div class="clear"></div>
+                    </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </li>
+      <li id="nav-forums"><a href="https://forums.adafruit.com/">FORUMS</a>
+      </li>
+      <li id="nav-forums"><a href="https://www.youtube.com/adafruit">VIDEOS</a>
+      </li>
+    </ul>
+  </nav>
+      
+    </div>
+  </div>
+</header>
+
+      <div id="main-content">
+        <div id="page-wrapper">
+	<div id="categories-block" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  <div id="categories-content" class="container">
+      <span class="category page-home-link"><a href="https://learn.adafruit.com/">
+        <i class="fa fa-home"></i>
+      </a></span>
+        <span class="category ">
+    <a href="https://learn.adafruit.com/category/adafruit-products">ADAFRUIT PRODUCTS</a>
+  </span>
+
+      
+      <span id="guide-favorite">
+    <a data-original-title="Favorite this guide?" class="favorites-link category right red" title="" data-toggle="tooltip" data-placement="left" data-remote="true" rel="nofollow" data-method="post" href="https://learn.adafruit.com/guides/247/favorites.js">
+      <i class="fa fa-heart-o"></i>
+</a></span>
+    <div class="clear"></div>
+  </div>
+</div>
+<div class="clear"></div>
+		<div id="content-wrapper" class="container" data-page-id="1510" data-guide-id="247">
+			<div class="row">
+				<div class="sidebar-left-wrapper hidden-phone hidden-tablet col-lg-two-and-half col-md-3 col-sm-4 col-xs-12">
+					<div style="width: 230px;" class="sidebar-left-content" data-clampedwidth=".sidebar-left-wrapper">
+							<nav class="sidebar-left">
+		<div class="title-bar">
+			<img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/2013_03_24_IMG_1453-1024.jpg" class="img-responsive">
+	    <div class="title">
+		    <h1><a href="https://learn.adafruit.com/adxl345-digital-accelerometer/overview">ADXL345 Digital Accelerometer</a></h1>
+		    <span class="tagline"><a href="https://learn.adafruit.com/adxl345-digital-accelerometer/overview">Triple-axis accelerometer breakout with a digital interface.</a></span>
+		  </div>
+	  </div>
+	  <ul class="page-parent nav">
+			  <li class="active">
+      <a class="sidebar-parent" href="https://learn.adafruit.com/adxl345-digital-accelerometer/overview">Overview</a>
+      <span class="page-draft-status">
+      </span>
+</li>
+  <li class="">
+      <a class="sidebar-parent" href="https://learn.adafruit.com/adxl345-digital-accelerometer/assembly-and-wiring">Assembly and Wiring</a>
+      <span class="page-draft-status">
+      </span>
+</li>
+  <li class="">
+      <a class="sidebar-parent" href="https://learn.adafruit.com/adxl345-digital-accelerometer/programming">Programming and Calibration</a>
+      <span class="page-draft-status">
+      </span>
+</li>
+  <li class="">
+      <a class="sidebar-parent" href="https://learn.adafruit.com/adxl345-digital-accelerometer/library-reference">Library Reference</a>
+      <span class="page-draft-status">
+      </span>
+</li>
+
+			<li class="single-page-spacer"></li>
+	      <li class="single-page-link"><a href="https://learn.adafruit.com/adxl345-digital-accelerometer?view=all">Single Page</a></li>
+			<li><a href="https://learn.adafruit.com/downloads/pdf/adxl345-digital-accelerometer.pdf">Download PDF</a></li>
+	  </ul>
+	</nav>
+	  <header class="sidebar-meta hidden-xs">
+    <h4>Contributors</h4>
+      <div><a href="https://learn.adafruit.com/users/adafruit_support_bill">Bill Earl</a></div>
+  </header>
+
+	  <header class="sidebar-meta hidden-xs">
+    <a class="feedback-link" title="Feedback? Corrections?" rel="nofollow" data-remote="true" data-method="get" href="https://learn.adafruit.com/pages/1510/settings_modal">
+          Feedback?  Corrections?
+</a>  </header>
+
+
+					</div>
+				</div>
+					<article class="col-lg-7 col-md-6 col-sm-8 col-xs-12">
+					<div class="content">
+							<div class="page-title-wrapper">
+								<h1 class="headline">
+									<span id="overview">Overview</span>
+								</h1>
+								    <a class="author" style="background-color: #FF6302;" data-hover-color="#d95402" data-default-color="#FF6302" href="https://learn.adafruit.com/users/adafruit_support_bill">
+        <img alt="Author Gravatar Image" class="user-gravatar load-gravatar" data-gravatar_hash="d41d8cd98f00b204e9800998ecf8427e" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/d41d8cd98f00b204e9800998ecf8427e.jpg" height="30" width="30">
+        <span class="name">BILL EARL</span>
+</a>    <div class="clear"></div>
+
+							</div>
+							<div class="page-content">
+									        <div class="row-fluid build-image">
+          <a href="https://learn.adafruit.com/assets/6360">
+            <img class="6360-asset img-responsive" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_products_2013_03_23_IMG_1441-1024.jpg" alt="adafruit_products_2013_03_23_IMG_1441-1024.jpg">
+</a>        </div>
+      <div class="row-fluid build-text">
+        The ADXL345 is a low-power, 3-axis MEMS accelerometer modules 
+with both I2C and SPI interfaces.  The Adafruit Breakout boards for 
+these modules feature on-board 3.3v voltage regulation and level 
+shifting which makes them simple to interface with 5v microcontrollers 
+such as the Arduino.<br><br>The ADXL345 features 4 sensitivity ranges 
+from +/- 2G to +/- 16G.  And it supports output data rates ranging from 
+10Hz to 3200Hz.<br><br><a href="http://www.analog.com/static/imported-files/data_sheets/ADXL345.pdf">ADXL345 datasheet</a>
+
+      </div>
+      <div class="row-fluid build-text">
+        
+<h2>
+<a href="#how-it-works" class="anchor-link"><span class="fa fa-link"></span></a><span id="how-it-works" class="anchor-link-target"></span>How it Works:</h2>
+<h2>
+<a href="#mems-micro-electro-mechanical-systems" class="anchor-link"><span class="fa fa-link"></span></a><span id="mems-micro-electro-mechanical-systems" class="anchor-link-target"></span>
+<a href="http://learn.adafruit.com/adafruit-analog-accelerometer-breakouts#mems-micro-electro-mechanical-systems"></a>MEMS - Micro Electro-Mechanical Systems</h2>
+The sensor consists of a micro-machined structure on a silicon wafer.  
+The structure is suspended by polysilicon springs which allow it to 
+deflect smoothly in any direction when subject to acceleration in the X,
+ Y and/or Z axis.  Deflection causes a change in capacitance between 
+fixed plates and plates attached to the suspended structure.  This 
+change in capacitance on each axis is converted to an output voltage 
+proportional to the acceleration on that axis.<br>
+      </div>
+        <div class="row-fluid build-image">
+          <a href="https://learn.adafruit.com/assets/6359">
+            <img class="6359-asset img-responsive" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/adafruit_products_2013_03_24_IMG_1453-1024.jpg" alt="adafruit_products_2013_03_24_IMG_1453-1024.jpg">
+</a>        </div>
+
+								<div class="page-navigation">
+										<a class="next-page" href="https://learn.adafruit.com/adxl345-digital-accelerometer/assembly-and-wiring">
+											ASSEMBLY AND WIRING<i class="fa fa-chevron-right"></i>
+</a>									<div class="clear"></div>
+								</div>
+								<span class="page-last-updated">Last updated on 2015-05-04 at 04.27.27 PM</span>
+									<span class="page-last-updated">Published on 2013-03-26 at 04.51.15 PM</span>
+							</div>
+					</div>
+				</article>
+				<div class="col-lg-two-and-half col-md-3 hidden-sm hidden-xs">
+  <header class="sidebar-right">
+    <div class="sidebar-right-content">
+      
+        <div class="product-wrapper">
+    <div class="product-image">
+      <a href="http://www.adafruit.com/product/1231">
+          <img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/1231-00.jpg" alt="1231-00.jpg" class="img-responsive" height="233">
+</a>    </div>
+    <div class="product-details">
+      <span class="product-price">$17.50</span>
+      <div class="product-title">ADXL345 - Triple-Axis Accelerometer (+-2g/4g/8g/16g) w/ I2C/SPI</div>
+        <a id="1231-product" class="product-buy" data-pid="1231" data-qty="1" href="http://www.adafruit.com/product/1231">ADDED!</a>    </div>
+  </div>
+
+        <div class="add-all-to-cart-container">
+          <a class="add-all-to-cart" href="#">ADD ALL TO CART</a>
+          <div class="add-all-to-cart-progress"></div>
+        </div>
+      <div class="clear"></div>
+    </div>
+  </header>
+</div>
+
+			</div>
+		</div>
+			<div class="related-guides-wrapper container">
+  <div class="row">
+    <div class="related-guides-title col-lg-12">
+      <h2>
+        RELATED GUIDES
+      </h2>
+    </div>
+  </div>
+  <div class="related-guides-content row">
+    	<div class="1050-guide masonry-block col-lg-3 col-md-3 col-sm-4 col-xs-12">
+        <div class="guide-block">
+            <div class="title-bar">
+                <div class="guide-categories">
+                    <ul>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/raspberry-pi">RASPBERRY PI</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/3d-printing">3D PRINTING</a>
+                            </li>
+                    </ul>
+                </div>
+                    <div class="guide-type new-guide">
+                        <a href="https://learn.adafruit.com/guides/latest">NEW GUIDE</a>
+                    </div>
+                <a href="https://learn.adafruit.com/portable-kippah-pi">
+                    <img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/hero_top_4_sm_002.jpg" class="img-responsive guide-image" data-standard-image="/system/guides/images/000/001/050/medium310/hero_top_4_sm.jpeg?1434305650" data-mobile-image="/system/guides/images/000/001/050/medium800/hero_top_4_sm.jpeg?1434305650">
+</a>                <div class="title">
+                    <h5>
+                        <a href="https://learn.adafruit.com/portable-kippah-pi">
+                            5" Display Kippah Portable Raspberry Pi<br>
+</a>                    </h5>
+                                    <div class="tagline">
+                    <a href="https://learn.adafruit.com/portable-kippah-pi">
+                    Make a portable Raspberry Pi
+</a>                </div>
+                </div>
+            </div>
+
+            <div class="details">
+
+                <div class="description">
+                    <a href="https://learn.adafruit.com/portable-kippah-pi">
+                        Build a portable Raspberry Pi with a 5" display.
+</a>                </div>
+                    <a class="author" style="background-color: #00b6e0;" data-hover-color="#009bbe" data-default-color="#00b6e0" href="https://learn.adafruit.com/users/pixil3d">
+        <img alt="Author Gravatar Image" class="user-gravatar load-gravatar" data-gravatar_hash="aeac7f36833142722d3ec5979af5b796" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/aeac7f36833142722d3ec5979af5b796.jpg" height="30" width="30">
+        <span class="name">RUIZ BROTHERS</span>
+</a>    <div class="clear"></div>
+
+            </div>
+
+
+        </div>
+	</div>
+	<div class="1048-guide masonry-block col-lg-3 col-md-3 col-sm-4 col-xs-12">
+        <div class="guide-block">
+            <div class="title-bar">
+                <div class="guide-categories">
+                    <ul>
+                            <li class="category child-category">
+                                    <a href="https://learn.adafruit.com/category/adafruit-products">ADAFRUIT PRODUCTS</a>
+                                    <span class="category-link-spacer">/</span>
+                                <a href="https://learn.adafruit.com/category/gemma">GEMMA</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/wearables">WEARABLES</a>
+                            </li>
+                    </ul>
+                </div>
+                    <div class="guide-type new-guide">
+                        <a href="https://learn.adafruit.com/guides/latest">NEW GUIDE</a>
+                    </div>
+                <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet">
+                    <img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/mindfulness-bracelet-thumbnail.jpg" class="img-responsive guide-image" data-standard-image="/system/guides/images/000/001/048/medium310/mindfulness-bracelet-thumbnail.jpg?1433899702" data-mobile-image="/system/guides/images/000/001/048/medium800/mindfulness-bracelet-thumbnail.jpg?1433899702">
+</a>                <div class="title">
+                    <h5>
+                        <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet">
+                            Buzzing Mindfulness Bracelet<br>
+</a>                    </h5>
+                                    <div class="tagline">
+                    <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet">
+                    feel the passage of time
+</a>                </div>
+                </div>
+            </div>
+
+            <div class="details">
+
+                <div class="description">
+                    <a href="https://learn.adafruit.com/buzzing-mindfulness-bracelet">
+                        Build a haptic timer into a linked leather bracelet using a vibrating motor and Arduino GEMMA!
+</a>                </div>
+                    <a class="author" style="background-color: #FF6302;" data-hover-color="#d95402" data-default-color="#FF6302" href="https://learn.adafruit.com/users/bekathwia">
+        <img alt="Author Gravatar Image" class="user-gravatar load-gravatar" data-gravatar_hash="527af8577d5c3f4e0f080460920ee3cc" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/527af8577d5c3f4e0f080460920ee3cc.png" height="30" width="30">
+        <span class="name">BECKY STERN</span>
+</a>    <div class="clear"></div>
+
+            </div>
+
+
+        </div>
+	</div>
+	<div class="1047-guide masonry-block col-lg-3 col-md-3 col-sm-4 col-xs-12">
+        <div class="guide-block">
+            <div class="title-bar">
+                <div class="guide-categories">
+                    <ul>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/tools">TOOLS</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/trinket">TRINKET</a>
+                            </li>
+                    </ul>
+                </div>
+                    <div class="guide-type new-guide">
+                        <a href="https://learn.adafruit.com/guides/latest">NEW GUIDE</a>
+                    </div>
+                <a href="https://learn.adafruit.com/pro-trinket-power-meter">
+                    <img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/DSC02643.jpg" class="img-responsive guide-image" data-standard-image="/system/guides/images/000/001/047/medium310/DSC02643.jpg?1433553110" data-mobile-image="/system/guides/images/000/001/047/medium800/DSC02643.jpg?1433553110">
+</a>                <div class="title">
+                    <h5>
+                        <a href="https://learn.adafruit.com/pro-trinket-power-meter">
+                            Pro Trinket Power Meter<br>
+</a>                    </h5>
+                                    <div class="tagline">
+                    <a href="https://learn.adafruit.com/pro-trinket-power-meter">
+                    Build a small meter to display voltage, current, and power usage.
+</a>                </div>
+                </div>
+            </div>
+
+            <div class="details">
+
+                <div class="description">
+                    <a href="https://learn.adafruit.com/pro-trinket-power-meter">
+                        Use a Pro Trinket and INA219 breakout to build a
+ small power meter that displays voltage, current, and power consumption
+ on an OLED display.
+</a>                </div>
+                    <a class="author" style="background-color: #00cd56;" data-hover-color="#00ae49" data-default-color="#00cd56" href="https://learn.adafruit.com/users/tdicola">
+        <img alt="Author Gravatar Image" class="user-gravatar load-gravatar" data-gravatar_hash="aeabe842a307a6d1eaf5eeec3d28598f" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/aeabe842a307a6d1eaf5eeec3d28598f.jpg" height="30" width="30">
+        <span class="name">TONY DICOLA</span>
+</a>    <div class="clear"></div>
+
+            </div>
+
+
+        </div>
+	</div>
+	<div class="1046-guide masonry-block col-lg-3 col-md-3 col-sm-4 col-xs-12">
+        <div class="guide-block">
+            <div class="title-bar">
+                <div class="guide-categories">
+                    <ul>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/hacks">HACKS</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/projects">PROJECTS</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/raspberry-pi">RASPBERRY PI</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/tools">TOOLS</a>
+                            </li>
+                            <li class="category child-category">
+                                    <a href="https://learn.adafruit.com/category/tools">TOOLS</a>
+                                    <span class="category-link-spacer">/</span>
+                                <a href="https://learn.adafruit.com/category/hand-tools">HAND TOOLS</a>
+                            </li>
+                            <li class="category child-category">
+                                    <a href="https://learn.adafruit.com/category/raspberry-pi">RASPBERRY PI</a>
+                                    <span class="category-link-spacer">/</span>
+                                <a href="https://learn.adafruit.com/category/learn-raspberry-pi">LEARN RASPBERRY PI</a>
+                            </li>
+                            <li class="category ">
+                                <a href="https://learn.adafruit.com/category/3d-printing">3D PRINTING</a>
+                            </li>
+                    </ul>
+                </div>
+                    <div class="guide-type new-guide">
+                        <a href="https://learn.adafruit.com/guides/latest">NEW GUIDE</a>
+                    </div>
+                <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop">
+                    <img src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/hero-pitop-sm.jpg" class="img-responsive guide-image" data-standard-image="/system/guides/images/000/001/046/medium310/hero-pitop-sm.jpg?1433426031" data-mobile-image="/system/guides/images/000/001/046/medium800/hero-pitop-sm.jpg?1433426031">
+</a>                <div class="title">
+                    <h5>
+                        <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop">
+                            Mini Raspberry Pi Handheld Notebook<br>
+</a>                    </h5>
+                                    <div class="tagline">
+                    <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop">
+                    Build a tiny handheld raspberry pi portable computer
+</a>                </div>
+                </div>
+            </div>
+
+            <div class="details">
+
+                <div class="description">
+                    <a href="https://learn.adafruit.com/mini-raspberry-pi-handheld-notebook-palmtop">
+                        Take your Pi on the go with an adorable handheld
+ "palmtop" computer. This battery powered Raspberry Pi has a 3.5" TFT 
+display, mini speaker, and keyboard with trackpad. 3 USB ports are 
+available for more accessories.
+</a>                </div>
+                    <a class="author" style="background-color: #00b6e0;" data-hover-color="#009bbe" data-default-color="#00b6e0" href="https://learn.adafruit.com/users/pixil3d">
+        <img alt="Author Gravatar Image" class="user-gravatar load-gravatar" data-gravatar_hash="aeac7f36833142722d3ec5979af5b796" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/aeac7f36833142722d3ec5979af5b796.jpg" height="30" width="30">
+        <span class="name">RUIZ BROTHERS</span>
+</a>    <div class="clear"></div>
+
+            </div>
+
+
+        </div>
+	</div>
+
+  </div>
+</div>
+
+		<div class="footer-spacer"></div>
+</div>
+
+
+
+  <div class="modal fade" id="notify-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">  
+        <div class="modal-header">
+          <a href="#" class="close" data-dismiss="modal">×</a>
+          <h5>OUT OF STOCK NOTIFICATION</h5>
+        </div>
+        <div class="modal-body">
+          <p class="notify-modal-form-header"></p>
+          <div class="notify-modal-products"></div>
+          <form id="notify-modal-form" name="back_in_stock_notification">
+            <p class="notify-modal-form-notice"></p>
+            <div class="notify-modal-break"></div>
+            <div class="form-group">
+              <label class="inputLabel" for="name">YOUR NAME</label>
+              <input size="25" maxlength="64" name="name" type="text">
+            </div>
+
+            <div class="form-group">
+              <label class="inputLabel" for="email">YOUR EMAIL</label>
+              <input size="25" maxlength="96" name="email" type="email">
+            </div>
+          
+            <input name="daigo" style="display:none;" type="text">
+            <input name="notify_me" value="true" type="hidden">
+          </form>
+          <div id="notify-modal-success" style="display:none">
+            <p>You have been successfully subscribed to the Notification
+ List for this product and will therefore receive an e-mail from us when
+ it is back in stock!</p>
+            <p>For security reasons, an e-mail has been sent to you 
+acknowledging your subscription. Please remember that this subscription 
+will not result in you receiving any e-mail from us about anything other
+ than the restocking of this item.</p>
+            <p>If, for any reason, you would like to unsubscribe from 
+the Notification List for this product you will find details of how to 
+do so in the e-mail that has just been sent to you!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" id="close-notify" style="display: none" data-dismiss="modal" data-target="#notify-modal">CLOSE</a>
+          <a href="#" id="submit-notify" rel="nofollow" class="blue-button">NOTIFY ME</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+        <footer id="adafruit-footer">
+    <div id="footer-content" class="container">
+      <div class="row">
+        <div class=" col-lg-6 col-md-6 col-sm-4 col-xs-12">
+          <nav>
+            <ul>
+              <li><a href="http://www.adafruit.com/contact_us">CONTACT</a></li>
+              <li><a href="http://www.adafruit.com/support">SUPPORT</a>
+              </li><li><a href="http://www.adafruit.com/distributors">DISTRIBUTORS</a></li>
+              <li><a href="http://www.adafruit.com/educators">EDUCATORS</a></li>
+              <li><a href="http://www.adafruit.com/jobs">JOBS</a></li>
+              <li><a href="http://www.adafruit.com/faq">FAQ</a></li>
+              <li><a href="http://www.adafruit.com/shippinginfo/">SHIPPING &amp; RETURNS</a></li>
+              <li><a href="http://www.adafruit.com/terms_of_service/">TERMS OF SERVICE</a></li>
+              <li><a href="http://www.adafruit.com/privacy">PRIVACY &amp; LEGAL</a></li>
+              <li><a href="http://www.adafruit.com/about">ABOUT US</a></li>
+            </ul>
+          </nav>
+          <div id="footer-copyright">
+            <a href="http://nytm.org/made-in-nyc/">ENGINEERED IN NYC</a> <span>Adafruit&nbsp;®</span>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-8 hidden-xs">
+          <div id="footer-quote" class="">
+            
+"Let the beauty of what you love be what you do"
+            <span class="quote-author">- <a href="http://en.wikipedia.org/wiki/Rumi">Rumi</a>
+</span>
+          </div>
+          
+        </div>
+        <div id="footer-seals">
+          <img class="img-responsive" src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/seals_2x.jpg" alt="Seals 2x">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+  
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-7723544-1']);
+      _gaq.push(['_setDomainName', 'adafruit.com']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  <script src="Overview%20_%20ADXL345%20Digital%20Accelerometer%20_%20Adafruit%20Learning%20System_files/application-fb77faf16d87c7bb5511986e99f82112.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "WebSite",
+      "url": "https://learn.adafruit.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://learn.adafruit.com/search?q={search_term}",
+        "query-input": "required name=search_term"
+      }
+    }
+  </script>
+
+</body></html>
