@@ -1,8 +1,9 @@
-#include <DS3231.h>
-
-#include <SparkFunTSL2561.h>
-
 //Imports
+#include "Adafruit_ADXL345_U.h"
+#include "Adafruit_Sensor.h"
+#include <SFE_BMP180.h> //Barometer
+#include "RTClib.h" //RTC
+#include <SparkFunTSL2561.h>
 #include <SD.h>
 #include "Wire.h"
 
@@ -11,73 +12,141 @@ int ledPin = 5;
 #define DS1307_ADDRESS 0x86;//Need to get updated I2C Address
 byte zero = 0x00; //Needed as a workaround for issue #537 RTC Support
 File testFile;
-
+SFE_BMP180 pressure;
+#define ALTITUDE 857 //ALTITUDE of Newark
 
 void setup(){
-	Serial.begin(9600);
-	Serial.print("Initializing SD card on pin 10...");
-	pinMode(10, OUTPUT);
-	if (!SD.begin(10)) {
-		Serial.println("SD Initialization Failed!");
-		return;
-	}
-	Serial.println("SD Initialization Done.");
+    Serial.begin(9600);
 
-	pinMode(ledPin, OUTPUT);
+        Serial.print("Initializing SD card on pin 10...");
+    pinMode(10, OUTPUT);
+    if (!SD.begin(10)) {
+        Serial.println("SD Initialization Failed!");
+        return;
+    }
+    Serial.println("SD Initialization Done.");
+
+    pinMode(ledPin, OUTPUT);
+
+        if (pressure.begin())
+            Serial.println("BMP180 init success");
+        else
+        {
+            // Oops, something went wrong, this is usually a connection problem,
+            // see the comments at the top of this sketch for the proper connections.
+
+            Serial.println("BMP180 init fail\n\n");
+            while(1); // Pause forever.
+        }
 
 }
 
 void loop(){
 
-	/*This is for flashing the leds
-	digitalWrite(ledPin, HIGH);
-	delay(10);
-	digitalWrite(ledPin, LOW);
-	delay(10);
-	*/
+    char status;
+    double T,P,p0,a;
 
-	/*This is testing writing to a file on the sdcard
+    // Loop here getting pressure readings every 10 seconds.
 
-	testFile = SD.open("test.txt", FILE_WRITE);
+    // If you want sea-level-compensated pressure, as used in weather reports,
+    // you will need to know the altitude at which your measurements are taken.
+    // We're using a constant called ALTITUDE in this sketch:
 
-	if (testFile) {
-    	Serial.print("Writing to test.txt...");
-    	testFile.println("testing 1, 2, 3.");
-		// close the file:
-   		testFile.close();
-    	Serial.println("Done.");
-  	} else {
-    	// if the file didn't open, print an error:
-    	Serial.println("error opening test.txt");
-  	}
-	*/
-  	/*
-  	//This is for testing the RTC and printing to serial
-  	Wire.beginTransmission(DS1307_ADDRESS);
- 	Wire.write(zero); //Workaround
-   	Wire.endTransmission();
+    Serial.println();
+    Serial.print("provided altitude: ");
+    Serial.print(ALTITUDE,0);
+    Serial.print(" meters, ");
+    Serial.print(ALTITUDE*3.28084,0);
+    Serial.println(" feet");
 
-	Wire.requestFrom(DS1307_ADDRESS, 7);
+    // If you want to measure altitude, and not pressure, you will instead need
+    // to provide a known baseline pressure. This is shown at the end of the sketch.
 
-	int second = bcdToDec(Wire.read());
-  	int minute = bcdToDec(Wire.read());
- 	int hour = bcdToDec(Wire.read() & 0b111111); //24 hour time
- 	int weekDay = bcdToDec(Wire.read()); //0-6 -> sunday - Saturday
- 	int monthDay = bcdToDec(Wire.read());
-  	int month = bcdToDec(Wire.read());
-  	int year = bcdToDec(Wire.read());
+    // You must first get a temperature measurement to perform a pressure reading.
 
-  	//print the date EG   3/1/11 23:59:59
-  	Serial.print(month);
-  	Serial.print("/");
-  	Serial.print(monthDay);
-  	Serial.print("/");
-  	Serial.print(year);
-  	Serial.print(" ");
-  	Serial.print(hour);
-  	Serial.print(":");
-  	Serial.print(minute);
-  	Serial.print(":");
-  	Serial.print(second);
-  	*/
+    // Start a temperature measurement:
+    // If request is successful, the number of ms to wait is returned.
+    // If request is unsuccessful, 0 is returned.
+
+    status = pressure.startTemperature();
+    if (status != 0)
+    {
+        // Wait for the measurement to complete:
+        delay(status);
+
+        // Retrieve the completed temperature measurement:
+        // Note that the measurement is stored in the variable T.
+        // Function returns 1 if successful, 0 if failure.
+
+        status = pressure.getTemperature(T);
+        if (status != 0)
+        {
+            // Print out the measurement:
+            Serial.print("temperature: ");
+            Serial.print(T,2);
+            Serial.print(" deg C, ");
+            Serial.print((9.0/5.0)*T+32.0,2);
+            Serial.println(" deg F");
+
+            // Start a pressure measurement:
+            // The parameter is the oversampling setting, from 0 to 3 (highest res, longest wait).
+            // If request is successful, the number of ms to wait is returned.
+            // If request is unsuccessful, 0 is returned.
+
+            status = pressure.startPressure(3);
+            if (status != 0)
+            {
+                // Wait for the measurement to complete:
+                delay(status);
+
+                // Retrieve the completed pressure measurement:
+                // Note that the measurement is stored in the variable P.
+                // Note also that the function requires the previous temperature measurement (T).
+                // (If temperature is stable, you can do one temperature measurement for a number of pressure measurements.)
+                // Function returns 1 if successful, 0 if failure.
+
+                status = pressure.getPressure(P,T);
+                if (status != 0)
+                {
+                    // Print out the measurement:
+                    Serial.print("absolute pressure: ");
+                    Serial.print(P,2);
+                    Serial.print(" mb, ");
+                    Serial.print(P*0.0295333727,2);
+                    Serial.println(" inHg");
+
+                    // The pressure sensor returns abolute pressure, which varies with altitude.
+                    // To remove the effects of altitude, use the sealevel function and your current altitude.
+                    // This number is commonly used in weather reports.
+                    // Parameters: P = absolute pressure in mb, ALTITUDE = current altitude in m.
+                    // Result: p0 = sea-level compensated pressure in mb
+
+                    p0 = pressure.sealevel(P,ALTITUDE); // we're at 1655 meters (Boulder, CO)
+                    Serial.print("relative (sea-level) pressure: ");
+                    Serial.print(p0,2);
+                    Serial.print(" mb, ");
+                    Serial.print(p0*0.0295333727,2);
+                    Serial.println(" inHg");
+
+                    // On the other hand, if you want to determine your altitude from the pressure reading,
+                    // use the altitude function along with a baseline pressure (sea-level or other).
+                    // Parameters: P = absolute pressure in mb, p0 = baseline pressure in mb.
+                    // Result: a = altitude in m.
+
+                    a = pressure.altitude(P,p0);
+                    Serial.print("computed altitude: ");
+                    Serial.print(a,0);
+                    Serial.print(" meters, ");
+                    Serial.print(a*3.28084,0);
+                    Serial.println(" feet");
+                }
+                else Serial.println("error retrieving pressure measurement\n");
+            }
+            else Serial.println("error starting pressure measurement\n");
+        }
+        else Serial.println("error retrieving temperature measurement\n");
+    }
+    else Serial.println("error starting temperature measurement\n");
+
+    delay(5000);  // Pause for 5 seconds.
 }
