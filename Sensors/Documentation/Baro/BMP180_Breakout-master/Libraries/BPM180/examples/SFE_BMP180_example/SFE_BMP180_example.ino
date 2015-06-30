@@ -101,19 +101,19 @@ void loop()
   // If you want sea-level-compensated pressure, as used in weather reports,
   // you will need to know the altitude at which your measurements are taken.
   // We're using a constant called ALTITUDE in this sketch:
-  
+
   Serial.println();
   Serial.print("provided altitude: ");
   Serial.print(ALTITUDE,0);
   Serial.print(" meters, ");
   Serial.print(ALTITUDE*3.28084,0);
   Serial.println(" feet");
-  
+
   // If you want to measure altitude, and not pressure, you will instead need
   // to provide a known baseline pressure. This is shown at the end of the sketch.
 
   // You must first get a temperature measurement to perform a pressure reading.
-  
+
   // Start a temperature measurement:
   // If request is successful, the number of ms to wait is returned.
   // If request is unsuccessful, 0 is returned.
@@ -137,7 +137,7 @@ void loop()
       Serial.print(" deg C, ");
       Serial.print((9.0/5.0)*T+32.0,2);
       Serial.println(" deg F");
-      
+
       // Start a pressure measurement:
       // The parameter is the oversampling setting, from 0 to 3 (highest res, longest wait).
       // If request is successful, the number of ms to wait is returned.
