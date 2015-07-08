@@ -16,11 +16,11 @@ void loop(){
 void setDateTime(){
 
   byte second =      00; //0-59
-  byte minute =      45; //0-59
-  byte hour =        14; //0-23
-  byte weekDay =     6; //1-7
-  byte monthDay =    27; //1-31
-  byte month =       6; //1-12
+  byte minute =      11; //0-59
+  byte hour =        9; //0-23
+  byte weekDay =     3; //1-7
+  byte monthDay =    8; //1-31
+  byte month =       7; //1-12
   byte year  =       15; //0-99
 
   Wire.beginTransmission(DS1307_ADDRESS);
