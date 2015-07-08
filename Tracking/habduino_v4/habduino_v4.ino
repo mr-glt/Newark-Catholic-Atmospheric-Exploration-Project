@@ -1,16 +1,81 @@
+/*
+ HABDuino Tracker
+ http://www.habduino.org
+ (c) Anthony Stirk M0UPU 
+ 
+ March 2015 Version 4.0.0
+ 
+ This is for the Version 4 Habduino Hardware.
+ 
+ Credits :
+ 
+ Interrupt Driven RTTY Code : Evolved from Rob Harrison's RTTY Code.
+ Thanks to :  http://www.engblaze.com/microcontroller-tutorial-avr-and-arduino-timer-interrupts/
+ http://gammon.com.au/power
+ 
+ Suggestion to lock variables when making the telemetry string & Compare match register calculation from Phil Heron.
+ APRS Code mainly by Phil Heron MI0VIM
+ 
+ GPS Code modified from jonsowman and Joey flight computer CUSF
+ https://github.com/cuspaceflight/joey-m/tree/master/firmware
+ 
+ Thanks to :
+ 
+ Phil Heron
+ James Coxon
+ Dave Akerman
+ 
+ The UKHAS Community http://ukhas.org.uk
+ 
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ See <http://www.gnu.org/licenses/>.
+ 
+ The Habduino kit is supplied as is with no guarantees of performance or operation. Although the HABDuino 
+ is designed for short-term Near Space operation, the conditions may exceed the specification of individual 
+ components which may fail to operate correctly because of low temperatures or pressures of increased 
+ radiation levels. We have no control over the effectiveness of your payload design especially the 
+ temperature and electromagnetic conditions  within, thus we make no warrnaty express or implied as to
+ the ability of our products to operate to any degree of effectiveness when used in your application.
+ 
+ If you decide to use this product under a balloon it’s your responsibility to ensure you comply with the 
+ local legislation and laws regarding meteorological balloon launching and radio transmission in the air. 
+ 
+ The Radiometrix MTX2 434Mhz is NOT license exempt in the United States of America and does need a radio
+ amateur license.  Use of APRS requires a radio amateur license in all countries and a number of countries 
+ don’t permit the airborne use of APRS under any circumstances.  
+ The Habduino cannot do APRS without an addon Radiometrix HX1 module.
+ 
+ The hardware design & code for Habduino is released under a Creative Commons License 3.0 Attribution-ShareAlike License :
+ See : http://creativecommons.org/licenses/by-sa/3.0/
+ It is YOUR responsibility to ensure this kit is used safely please review the safety section.
+ 
+ The latest code is available here : https://github.com/HABduino/HABduino
+ 
+ 
+ */
+
 /* BITS YOU WANT TO AMEND */
 
 #define MTX2_FREQ 434.485 // format 434.XXX  
-char callsign[9] = "HABDUINO";  // MAX 9 CHARACTERS!!
+char callsign[9] = "WP4NJQ";  // MAX 9 CHARACTERS!!
 
-/* DON"T change unless you know what you are doing */
+/* BELOW HERE YOU PROBABLY DON'T WANT TO BE CHANGING STUFF */
 
 #include <util/crc16.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <avr/pgmspace.h>
-#include <OneWire/OneWire.h>
-#include <DallasTemperature/DallasTemperature.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include <SoftwareSerial.h>
 #include "ax25modem.h"
 static const uint8_t PROGMEM _sine_table[] = {
@@ -92,30 +157,6 @@ unsigned long startTime;
 char comment[3]={
   ' ', ' ', '\0'};
 
-void setupGPS() {
-  // Turning off all GPS NMEA strings apart on the uBlox module
-  // Taken from Project Swift (rather than the old way of sending ascii text)
-  int gps_set_sucess=0;
-  uint8_t setNMEAoff[] = {
-    0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x80, 0x25, 0x00, 0x00, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA0, 0xA9           };
-  sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
-  while(!gps_set_sucess)
-  {
-    sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
-    gps_set_sucess=getUBX_ACK(setNMEAoff);
-    if(!gps_set_sucess)
-    {
-      blinkled(2);
-    }
-  }
-  wait(500);
-  setGPS_GNSS();
-  wait(500);
-  setGPS_DynamicModel6();
-  wait(500);
-  setGps_MaxPerformanceMode();
-  wait(500);
-}
 
 void setup()  { 
   pinMode(MTX2_TXD, OUTPUT);
@@ -392,6 +433,30 @@ void sendUBX(uint8_t *MSG, uint8_t len) {
   for(int i=0; i<len; i++) {
     Serial.write(MSG[i]);
   }
+}
+void setupGPS() {
+  // Turning off all GPS NMEA strings apart on the uBlox module
+  // Taken from Project Swift (rather than the old way of sending ascii text)
+  int gps_set_sucess=0;
+  uint8_t setNMEAoff[] = {
+    0xB5, 0x62, 0x06, 0x00, 0x14, 0x00, 0x01, 0x00, 0x00, 0x00, 0xD0, 0x08, 0x00, 0x00, 0x80, 0x25, 0x00, 0x00, 0x07, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0xA0, 0xA9           };
+  sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
+  while(!gps_set_sucess)
+  {
+    sendUBX(setNMEAoff, sizeof(setNMEAoff)/sizeof(uint8_t));
+    gps_set_sucess=getUBX_ACK(setNMEAoff);
+    if(!gps_set_sucess)
+    {
+      blinkled(2);
+    }
+  }
+  wait(500);
+  setGPS_GNSS();
+  wait(500);
+  setGPS_DynamicModel6();
+  wait(500);
+  setGps_MaxPerformanceMode();
+  wait(500);
 }
 
 void setGPS_DynamicModel6()
@@ -819,7 +884,7 @@ void tx_aprs()
   {
     ax25_frame(
     APRS_CALLSIGN, APRS_SSID,
-    "APRS", 0,
+    "WP4NJQ", 0,
     //0, 0, 0, 0,
     "WIDE1", 1, "WIDE2",1,
     //"WIDE2", 1,
@@ -1025,3 +1090,20 @@ uint16_t crccat(char *msg)
 
   return(x);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
