@@ -75,17 +75,7 @@ void setup()
 	}
 	dataFile = SD.open("datatest.csv", FILE_WRITE);
   dataFile.println(",");
-  dataFile.print("Year");
-	dataFile.print(",");
-	dataFile.print("Month");
-	dataFile.print(",");
-	dataFile.print("Day");
-	dataFile.print(",");
-	dataFile.print("Hour");
-	dataFile.print(",");
-	dataFile.print("Minute");
-	dataFile.print(",");
-	dataFile.print("Second");
+  dataFile.print("Timestamp");
   dataFile.print(",");
   dataFile.print("External Temp F");
   dataFile.print(",");
@@ -136,17 +126,17 @@ void loop(){
 	DateTime now = rtc.now();
 
 	dataFile = SD.open("datatest.csv", FILE_WRITE);
-	dataFile.print(now.year(), DEC);
-	dataFile.print(",");
-	dataFile.print(now.month(), DEC);
-	dataFile.print(",");
-	dataFile.print(now.day(), DEC);
-	dataFile.print(",");
-	dataFile.print(now.hour(), DEC);
-	dataFile.print(",");
-	dataFile.print(now.minute(), DEC);
-	dataFile.print(",");
-	dataFile.print(now.second(), DEC);
+  dataFile.print(now.month(), DEC);
+  dataFile.print("/");
+  dataFile.print(now.day(), DEC);
+  dataFile.print("/");
+  dataFile.print(now.year(), DEC);
+  dataFile.print(" ");
+  dataFile.print(now.hour(), DEC);
+  dataFile.print(":");
+  dataFile.print(now.minute(), DEC);
+  dataFile.print(":");
+  dataFile.print(now.second(), DEC);
   dataFile.print(",");
 
 
