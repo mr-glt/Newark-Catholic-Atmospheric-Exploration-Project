@@ -44,7 +44,7 @@ int HIH4030_Pin = A3; //Output from HIH-4030
 void setup()
 {
   /*Serial Setup*/
-	Serial1.begin(9600); //Start Serial
+	Serial.begin(9600); //Start Serial
 
   /*I2C Setup*/
   Wire.begin(); //Start I2C
