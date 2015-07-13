@@ -9,11 +9,8 @@
 #include <Adafruit_TSL2561_U.h> //Luminosity Sensor
 
 /*Deffinations*/
-int ledPin = 5; //Pin for LEDs
-
  //Accel
- #define DS1307_ADDRESS 0x86;//Need to get updated I2C Address
- byte zero = 0x00; //Needed as a workaround for issue #537 RTC Support
+ #define DS1307_ADDRESS 0x86; //10000110, I2C address of ADXL345
  Adafruit_ADXL345_Unified accel = Adafruit_ADXL345_Unified(12345);
 
  //RTC
@@ -27,15 +24,17 @@ int ledPin = 5; //Pin for LEDs
  File dataFile;
 
  //UV
- int UVOUT = A0; //Output from the sensor
- int REF_3V3 = A2; //3.3V power on the Arduino board
+ int UVOUT = A0; //Output from the ML8511
+ int REF_3V3 = A2; //3.3V power on the Arduino board to use as reference
 
  //Luminosity
  Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);
+
  //Magneto
- #define address 0x1E //0011110b, I2C 7bit address of HMC5883
+ #define magnetoAddress 0x1E //0011110b, I2C address of HMC5883
+
 //Humidity
-int HIH4030_Pin = A3;
+int HIH4030_Pin = A3; //Output from HIH-4030
 
 /*End Deffinations*/
 
@@ -43,40 +42,31 @@ int HIH4030_Pin = A3;
 void setup()
 {
   /*Serial Setup*/
-	Serial.begin(9600);
-  Wire.begin();
+	Serial.begin(9600); //Start Serial
 
-  /*Led Setup*/
-  pinMode(ledPin, OUTPUT);
+  /*I2C Setup*/
+  Wire.begin(); //Start I2C
 
 	/*Barometer Setup*/
-	if (pressure.begin())
-  {
-  }
+	pressure.begin(); //Start Baro
+
 
 	/*RTC Setup*/
-	#ifdef AVR
-		Wire.begin();
-	#else
-		Wire1.begin(); // Shield I2C pins connect to alt I2C bus on Arduino Due
-	#endif
-		rtc.begin();
-	if (! rtc.isrunning()) {
-
-	}
+	rtc.begin(); //Start RTC
 
   /*Accel Setup*/
-	if(!accel.begin()){
-	}
-	accel.setRange(ADXL345_RANGE_16_G);
+	accel.begin(); //Start Accelrometer
+	accel.setRange(ADXL345_RANGE_16_G); //Set Accelrometer Range
 
   /*SDcard Setup*/
-	if (!SD.begin(4)) {
-	}
-	dataFile = SD.open("datatest.csv", FILE_WRITE);
-  dataFile.println(",");
+	SD.begin(4); //Start SD
+
+  //Print Header
+  dataFile = SD.open("datatest.csv", FILE_WRITE); //Open dataFile
+
+  dataFile.println(","); //println is used to start a new row
   dataFile.print("Timestamp");
-  dataFile.print(",");
+  dataFile.print(","); //Commas are used to declare a new cell in .CSV
   dataFile.print("External Temp F");
   dataFile.print(",");
   dataFile.print("Absolute Pressure(mB)");
@@ -105,27 +95,30 @@ void setup()
   dataFile.println(",");
 
 
-	dataFile.close();
+	dataFile.close(); //Close dataFile
 
   /*UV */
-	pinMode(UVOUT, INPUT);
-	pinMode(REF_3V3, INPUT);
+	pinMode(UVOUT, INPUT); //Set the pin used to read the UV Sensor to Input
+	pinMode(REF_3V3, INPUT); //Set reference 3.3V pin to Input
 
   /*Luminosity*/
-  tsl.begin();
-  configureSensor();
+  tsl.begin(); //Start Luminosity Sensor
+  configureLumin(); //Run Config Fucntion
   /*Magneto*/
-  Wire.beginTransmission(address); //open communication with HMC5883
-  Wire.write(0x02); //select mode register
-  Wire.write(0x00); //continuous measurement mode
+  Wire.beginTransmission(magnetoAddress); //Open Communication with HMC5883
+  Wire.write(0x02); //Select Mode Register
+  Wire.write(0x00); //Set Continuous Measurement Mode
   Wire.endTransmission();
 }
 
 void loop(){
-	/*Time*/
-	DateTime now = rtc.now();
+	Serial.println();
 
-	dataFile = SD.open("datatest.csv", FILE_WRITE);
+  /*Time*/
+	DateTime now = rtc.now(); //Define now
+
+	dataFile = SD.open("datatest.csv", FILE_WRITE); //Open dataFile
+  //Print Time
   dataFile.print(now.month(), DEC);
   dataFile.print("/");
   dataFile.print(now.day(), DEC);
@@ -139,25 +132,23 @@ void loop(){
   dataFile.print(now.second(), DEC);
   dataFile.print(",");
 
-
-
-	/*Leds*/
-  digitalWrite(ledPin, HIGH);
-
   /*Barometer*/
+
   char status;
   double T,P,p0,a;
-  Serial.println();
   status = pressure.startTemperature();
+
   if (status != 0)
   {
     delay(status);
     status = pressure.getTemperature(T);
-    if (status != 0)
+    if (status != 0) //If status does not = zero there was an error starting temp measurement
     {
+      //Print to Serial
       Serial.print("temp: ");
       Serial.print((9.0/5.0)*T+32.0,2);
       Serial.println(" deg F");
+      //Write to SD
       dataFile.print((9.0/5.0)*T+32.0,2);
       dataFile.print(",");
 
@@ -166,7 +157,7 @@ void loop(){
       {
         delay(status);
         status = pressure.getPressure(P,T);
-        if (status != 0)
+        if (status != 0) //If status does not = zero there was an error retrieving pressure measurement
         {
           Serial.print("aP: ");
           Serial.print(P,2);
@@ -193,36 +184,44 @@ void loop(){
   }
 
 	/*Accel*/
-  sensors_event_t events;
-  accel.getEvent(&events);
-	dataFile.print(events.acceleration.x);
+  sensors_event_t accelEvent; //New Sensor Even
+
+  accel.getEvent(&accelEvent); //Get Event
+
+  //Write Reading to SD
+  dataFile.print(accelEvent.acceleration.x);
   dataFile.print(",");
-  dataFile.print(events.acceleration.y);
+  dataFile.print(accelEvent.acceleration.y);
   dataFile.print(",");
-  dataFile.print(events.acceleration.z);
+  dataFile.print(accelEvent.acceleration.z);
   dataFile.print(",");
-  Serial.print(events.acceleration.x);
-	Serial.print(events.acceleration.y);
-	Serial.print(events.acceleration.z);
+  //Write Reading to Serial
+  Serial.println(accelEvent.acceleration.x);
+	Serial.println(accelEvent.acceleration.y);
+	Serial.println(accelEvent.acceleration.z);
 
 	/*Humidity*/
-  float temperature = 25; //replace with a thermometer reading if you have it
+
   float relativeHumidity  = getHumidity(T);
+
   dataFile.print(relativeHumidity);
   dataFile.print(",");
   Serial.println(relativeHumidity);
-	/*Luminosity*/
-  sensors_event_t event;
-  tsl.getEvent(&event);
-  if (event.light)
+
+  /*Luminosity*/
+
+  sensors_event_t luminEvent; //New Lumin Even
+  tsl.getEvent(&luminEvent); //Get Reading
+
+  if (luminEvent.light)
   {
-    Serial.print(event.light); Serial.println(" lux");
-    dataFile.print(event.light);
+    Serial.print(luminEvent.light); Serial.println(" lux");
+    dataFile.print(luminEvent.light);
     dataFile.print(",");
   }
   else
   {
-    Serial.println("Sensor overload");
+    Serial.println("Sensor overload"); //Sensor is Over Saturalted
   }
 
 	/*UV Sensor*/
@@ -241,14 +240,13 @@ void loop(){
   dataFile.print(",");
 
   /*Magneto*/
-  int x,y,z; //triple axis data
+  int x,y,z; //Triple Axis Data
 
-  //Tell the HMC5883L where to begin reading data
-  Wire.beginTransmission(address);
+  Wire.beginTransmission(magnetoAddress);
   Wire.write(0x03); //select register 3, X MSB register
   Wire.endTransmission();
 
-  Wire.requestFrom(address, 6);
+  Wire.requestFrom(magnetoAddress, 6);
   if(6<=Wire.available()){
     x = Wire.read()<<8; //X msb
     x |= Wire.read(); //X lsb
@@ -268,26 +266,15 @@ void loop(){
   dataFile.print(z);
   dataFile.println(",");
 
+  /*Odds and Ends*/
+  Serial.println(); //Print a line to show separate readings
+	dataFile.close(); //Close dataFile
 
-  Serial.println();
-	dataFile.close();
-  delay(500);
-
+  delay(500); //Wait 0.5 Seconds before taking next readings.
 }
 
-float getHumidity(float degreesCelsius){
-  float supplyVolt = 5.0;
 
-  int HIH4030_Value = analogRead(HIH4030_Pin);
-  float voltage = HIH4030_Value/1023. * supplyVolt; // convert to voltage value
-
-  float sensorRH = 161.0 * voltage / supplyVolt - 25.8;
-  float trueRH = sensorRH / (1.0546 - 0.0026 * degreesCelsius); //temperature adjustment
-
-  return trueRH;
-}
-
-void configureSensor(void)
+void configureLumin(void)
 {
   // tsl.setGain(TSL2561_GAIN_1X);      /* No gain ... use in bright light to avoid sensor saturation */
   // tsl.setGain(TSL2561_GAIN_16X);     /* 16x gain ... use in low light to boost sensitivity */
@@ -298,7 +285,9 @@ void configureSensor(void)
   // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_402MS);  /* 16-bit data but slowest conversions */
 }
 
-//Values
+/*Values*/
+
+//Used to find average of UV reading is voltage being supplied.
 int averageAnalogRead(int pinToRead){
   byte numberOfReadings = 8;
   unsigned int runningValue = 0;
@@ -310,7 +299,20 @@ int averageAnalogRead(int pinToRead){
   return(runningValue);
 }
 
-
+//Used to map UV sensor readings
 float mapfloat(float x, float in_min, float in_max, float out_min, float out_max){
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+//Used to find average of readings of humidity sensor
+float getHumidity(float degreesCelsius){
+  float supplyVolt = 5.0; //Need to change to reading
+
+  int HIH4030_Value = analogRead(HIH4030_Pin);
+  float voltage = HIH4030_Value/1023. * supplyVolt; // convert to voltage value
+
+  float sensorRH = 161.0 * voltage / supplyVolt - 25.8;
+  float trueRH = sensorRH / (1.0546 - 0.0026 * degreesCelsius); //temperature adjustment
+
+  return trueRH;
 }
