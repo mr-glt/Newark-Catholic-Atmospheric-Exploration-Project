@@ -1,11 +1,11 @@
 /* DISCLAIMER: This code is untested for use on an actual high altitude flight.*/
 
 //Imports
-#include "Adafruit_ADXL345_U.h" //Accelrometer
-#include "Adafruit_Sensor.h" //Adafruit Products
+#include <Adafruit_ADXL345_U.h> //Accelrometer
+#include <Adafruit_Sensor.h> //Adafruit Products
 #include <SFE_BMP180.h> //Barometer
-#include "RTClib.h" //RTC
-#include "Wire.h" //Wire for I2C
+#include <RTClib.h> //RTC
+#include <Wire.h> //Wire for I2C
 #include <SPI.h> //SPI for SD
 #include <SD.h> //SDcard
 #include <Adafruit_TSL2561_U.h> //Luminosity Sensor
@@ -134,6 +134,17 @@ void loop(){
   dataFile.print(now.second(), DEC);
   dataFile.print(",");
 
+  Serial.print(now.month(), DEC);
+  Serial.print("/");
+  Serial.print(now.day(), DEC);
+  Serial.print("/");
+  Serial.print(now.year(), DEC);
+  Serial.print(" ");
+  Serial.print(now.hour(), DEC);
+  Serial.print(":");
+  Serial.print(now.minute(), DEC);
+  Serial.print(":");
+  Serial.println(now.second(), DEC);
   /*Barometer*/
 
   char status;
@@ -236,7 +247,7 @@ void loop(){
 
   float uvIntensity = mapfloat(outputVoltage, 0.99, 2.9, 0.0, 15.0);
 
-  Serial.print(" UV Intensity (mW/cm^2): ");
+  Serial.print("UV Intensity (mW/cm^2): ");
   Serial.println(uvIntensity);
   dataFile.print(uvIntensity);
   dataFile.print(",");
@@ -258,8 +269,8 @@ void loop(){
     y |= Wire.read(); //Y lsb
   }
 
-  Serial.print(x);
-  Serial.print(y);
+  Serial.println(x);
+  Serial.println(y);
   Serial.println(z);
   dataFile.print(x);
   dataFile.print(",");
