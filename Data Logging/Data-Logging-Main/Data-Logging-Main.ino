@@ -3,12 +3,12 @@
 //Imports
 #include <Adafruit_ADXL345_U.h> //Accelrometer
 #include <Adafruit_Sensor.h> //Adafruit Products
-#include <SFE_BMP180.h> //Barometer
 #include <RTClib.h> //RTC
 #include <Wire.h> //Wire for I2C
 #include <SPI.h> //SPI for SD
 #include <SD.h> //SDcard
 #include <Adafruit_TSL2561_U.h> //Luminosity Sensor
+#include <Adafruit_BMP085_U.h> //Barometer
 
 /*Deffinations*/
  //Accel
@@ -19,8 +19,8 @@
  RTC_DS1307 rtc;
 
  //Pressure
- SFE_BMP180 pressure;
- #define ALTITUDE 254 //ALTITUDE of Newark
+ Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085);
+ float temperature;
 
  //SDcard
  File dataFile;
@@ -50,8 +50,7 @@ void setup()
   Wire.begin(); //Start I2C
 
 	/*Barometer Setup*/
-	pressure.begin(); //Start Baro
-
+  bmp.begin(); //Start Baro
 
 	/*RTC Setup*/
 	rtc.begin(); //Start RTC
@@ -68,12 +67,10 @@ void setup()
 
   dataFile.println(","); //println is used to start a new row
   dataFile.print("Timestamp");
-  dataFile.print(","); //Commas are used to declare a new cell in .CSV
-  dataFile.print("External Temp F");
-  dataFile.print(",");
+  dataFile.print(","); //Commas are used to declare a new cell in .CSV (Comma Separated Values)
   dataFile.print("Absolute Pressure(mB)");
   dataFile.print(",");
-  dataFile.print("Relative (sea-level) Pressure(mb)");
+  dataFile.print("External Temp C");
   dataFile.print(",");
   dataFile.print("Computed altitude(m)");
   dataFile.print(",");
@@ -146,54 +143,35 @@ void loop(){
   Serial.print(":");
   Serial.println(now.second(), DEC);
   /*Barometer*/
+  sensors_event_t baroEvent; //Create a New Event for the Baro
+  bmp.getEvent(&baroEvent); //Get Event
 
-  char status;
-  double T,P,p0,a;
-  status = pressure.startTemperature();
-
-  if (status != 0)
+  if (baroEvent.pressure)
   {
-    delay(status);
-    status = pressure.getTemperature(T);
-    if (status != 0) //If status does not = zero there was an error starting temp measurement
-    {
-      //Print to Serial
-      Serial.print("temp: ");
-      Serial.print((9.0/5.0)*T+32.0,2);
-      Serial.println(" deg F");
-      //Write to SD
-      dataFile.print((9.0/5.0)*T+32.0,2);
-      dataFile.print(",");
+    Serial.print("Pressure:    ");
+    Serial.print(baroEvent.pressure); //Print Pressure to Serial
+    Serial.println(" hPa");
+    dataFile.print(baroEvent.pressure); //Print Pressure to SD
+    dataFile.print(",");
 
-      status = pressure.startPressure(3);
-      if (status != 0)
-      {
-        delay(status);
-        status = pressure.getPressure(P,T);
-        if (status != 0) //If status does not = zero there was an error retrieving pressure measurement
-        {
-          Serial.print("aP: ");
-          Serial.print(P,2);
-          Serial.println(" mb");
-          dataFile.print(P,2);
-          dataFile.print(",");
+    bmp.getTemperature(&temperature); //Get Temp
+    Serial.print("Temperature: ");
+    Serial.print(temperature); //Print to Serial
+    Serial.println(" C");
+    dataFile.print(temperature); //Print to SD
+    dataFile.print(",");
 
-          p0 = pressure.sealevel(P,ALTITUDE);
-          Serial.print("rP: ");
-          Serial.print(p0,2);
-          Serial.println(" mb");
-          dataFile.print(p0,2);
-          dataFile.print(",");
-
-          a = pressure.altitude(P,p0);
-          Serial.print("computed altitude: ");
-          Serial.print(a,0);
-          Serial.println(" meters");
-          dataFile.print(a,0);
-          dataFile.print(",");
-        }
-      }
-    }
+    // 'SENSORS_PRESSURE_SEALEVELHPA' can be changed to whatever sea level pressure is in your local area
+    float seaLevelPressure = SENSORS_PRESSURE_SEALEVELHPA;
+    Serial.print("Altitude:    ");
+    Serial.print(bmp.pressureToAltitude(seaLevelPressure, baroEvent.pressure)); //Print to Serial
+    Serial.println(" m");
+    dataFile.print(bmp.pressureToAltitude(seaLevelPressure, baroEvent.pressure)); //Print to SD
+    dataFile.print(",");
+  }
+  else
+  {
+    Serial.println("Baro Error");
   }
 
 	/*Accel*/
@@ -215,10 +193,11 @@ void loop(){
 
 	/*Humidity*/
 
-  float relativeHumidity  = getHumidity(T);
+  float relativeHumidity  = getHumidity(temperature);
 
   dataFile.print(relativeHumidity);
   dataFile.print(",");
+  Serial.print("rH: ");
   Serial.println(relativeHumidity);
 
   /*Luminosity*/
