@@ -1,71 +1,71 @@
 /*
  HABDuino Tracker
  http://www.habduino.org
- (c) Anthony Stirk M0UPU 
- 
+ (c) Anthony Stirk M0UPU
+
  March 2015 Version 4.0.0
- 
+
  This is for the Version 4 Habduino Hardware.
- 
+
  Credits :
- 
+
  Interrupt Driven RTTY Code : Evolved from Rob Harrison's RTTY Code.
  Thanks to :  http://www.engblaze.com/microcontroller-tutorial-avr-and-arduino-timer-interrupts/
  http://gammon.com.au/power
- 
+
  Suggestion to lock variables when making the telemetry string & Compare match register calculation from Phil Heron.
  APRS Code mainly by Phil Heron MI0VIM
- 
+
  GPS Code modified from jonsowman and Joey flight computer CUSF
  https://github.com/cuspaceflight/joey-m/tree/master/firmware
- 
+
  Thanks to :
- 
+
  Phil Heron
  James Coxon
  Dave Akerman
- 
+
  The UKHAS Community http://ukhas.org.uk
- 
+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  This program is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  See <http://www.gnu.org/licenses/>.
- 
- The Habduino kit is supplied as is with no guarantees of performance or operation. Although the HABDuino 
- is designed for short-term Near Space operation, the conditions may exceed the specification of individual 
- components which may fail to operate correctly because of low temperatures or pressures of increased 
- radiation levels. We have no control over the effectiveness of your payload design especially the 
+
+ The Habduino kit is supplied as is with no guarantees of performance or operation. Although the HABDuino
+ is designed for short-term Near Space operation, the conditions may exceed the specification of individual
+ components which may fail to operate correctly because of low temperatures or pressures of increased
+ radiation levels. We have no control over the effectiveness of your payload design especially the
  temperature and electromagnetic conditions  within, thus we make no warrnaty express or implied as to
  the ability of our products to operate to any degree of effectiveness when used in your application.
- 
- If you decide to use this product under a balloon it’s your responsibility to ensure you comply with the 
- local legislation and laws regarding meteorological balloon launching and radio transmission in the air. 
- 
+
+ If you decide to use this product under a balloon it’s your responsibility to ensure you comply with the
+ local legislation and laws regarding meteorological balloon launching and radio transmission in the air.
+
  The Radiometrix MTX2 434Mhz is NOT license exempt in the United States of America and does need a radio
- amateur license.  Use of APRS requires a radio amateur license in all countries and a number of countries 
- don’t permit the airborne use of APRS under any circumstances.  
+ amateur license.  Use of APRS requires a radio amateur license in all countries and a number of countries
+ don’t permit the airborne use of APRS under any circumstances.
  The Habduino cannot do APRS without an addon Radiometrix HX1 module.
- 
+
  The hardware design & code for Habduino is released under a Creative Commons License 3.0 Attribution-ShareAlike License :
  See : http://creativecommons.org/licenses/by-sa/3.0/
  It is YOUR responsibility to ensure this kit is used safely please review the safety section.
- 
+
  The latest code is available here : https://github.com/HABduino/HABduino
- 
- 
+
+
  */
 
 /* BITS YOU WANT TO AMEND */
 
-#define MTX2_FREQ 434.485 // format 434.XXX  
+#define MTX2_FREQ 434.485 // format 434.XXX
 char callsign[9] = "CHANGEME";  // MAX 9 CHARACTERS!!
 
 /* BELOW HERE YOU PROBABLY DON'T WANT TO BE CHANGING STUFF */
@@ -88,8 +88,8 @@ static const uint8_t PROGMEM _sine_table[] = {
 #define LED_WARN 9
 #define LED_OK 8
 #define BATTERY_ADC A0
-//#define MTX2_SHIFT 425        
-//#define MTX2_OFFSET 0          // 0-100 Slightly adjusts the frequency by increasing the PWM 
+//#define MTX2_SHIFT 425
+//#define MTX2_OFFSET 0          // 0-100 Slightly adjusts the frequency by increasing the PWM
 #define MTX2_TXD 4
 #define MTX2_ENABLE 7
 
@@ -133,24 +133,24 @@ int errorstatus=0;
  Bit 1 = GPS Error Condition Noted Cold Boot GPS
  Bit 2 = DS18B20 temp sensor status 0 = OK 1 = Fault
  Bit 3 = Current Dynamic Model 0 = Flight 1 = Pedestrian
- Bit 4 = PSM Status 0 = PSM On 1 = PSM Off                   
+ Bit 4 = PSM Status 0 = PSM On 1 = PSM Off
  Bit 5 = Lock 0 = GPS Locked 1= Not Locked
- 
- So error 8 means the everything is fine just the GPS is in pedestrian mode. 
- Below 1000 meters the code puts the GPS in the more accurate pedestrian mode. 
- Above 1000 meters it switches to dynamic model 6 i.e flight mode and turns the LED's off for additional power saving. 
- So as an example error code 40 = 101000 means GPS not locked and in pedestrian mode. 
+
+ So error 8 means the everything is fine just the GPS is in pedestrian mode.
+ Below 1000 meters the code puts the GPS in the more accurate pedestrian mode.
+ Above 1000 meters it switches to dynamic model 6 i.e flight mode and turns the LED's off for additional power saving.
+ So as an example error code 40 = 101000 means GPS not locked and in pedestrian mode.
  */
 
 char txstring[100];
-uint8_t buf[60]; 
+uint8_t buf[60];
 uint8_t lock =0, sats = 0, hour = 0, minute = 0, second = 0;
 uint8_t oldhour = 0, oldminute = 0, oldsecond = 0;
 int GPSerror = 0,navmode = 0,psm_status = 0,lat_int=0,lon_int=0,tempsensors,temperature1=0,temperature2=0;
 int32_t lat = 0, lon = 0, alt = 0, maxalt = 0, lat_dec = 0, lon_dec =0 ,tslf=0;
 unsigned long currentMillis;
 long previousMillis = 0;
-int batteryadc_v,battvaverage=0,aprstxstatus=0; 
+int batteryadc_v,battvaverage=0,aprstxstatus=0;
 int32_t battvsmooth[5] ;
 int aprs_tx_status = 0, aprs_attempts = 0;
 unsigned long startTime;
@@ -158,7 +158,7 @@ char comment[3]={
   ' ', ' ', '\0'};
 
 
-void setup()  { 
+void setup()  {
   pinMode(MTX2_TXD, OUTPUT);
   pinMode(LED_WARN, OUTPUT);
   pinMode(HX1_ENABLE, OUTPUT);
@@ -190,7 +190,7 @@ void setup()  {
   initialise_interrupt();
   sensors.begin();
   tempsensors=sensors.getDeviceCount();
-} 
+}
 
 void loop()   {
   oldhour=hour;
@@ -208,7 +208,7 @@ void loop()   {
   }
   checkDynamicModel();
 
-#ifdef APRS 
+#ifdef APRS
   if(sats>=4){
     if (aprs_tx_status==0)
     {
@@ -220,7 +220,7 @@ void loop()   {
       send_APRS();
       aprs_attempts++;
     }
-  }  
+  }
 #endif
 
 
@@ -269,7 +269,7 @@ void loop()   {
   }
 }
 
-void initialise_interrupt() 
+void initialise_interrupt()
 {
   // initialize Timer1
   cli();          // disable global interrupts
@@ -290,24 +290,24 @@ ISR(TIMER1_COMPA_vect)
 
   if(alt>1000 && sats >= 4)
   {
-    digitalWrite(LED_WARN,LOW);  
-    digitalWrite(LED_OK,LOW);  
+    digitalWrite(LED_WARN,LOW);
+    digitalWrite(LED_OK,LOW);
   }
-  else 
+  else
   {
     currentMillis = millis();
-    if(currentMillis - previousMillis > ONE_SECOND) 
+    if(currentMillis - previousMillis > ONE_SECOND)
     {
-      previousMillis = currentMillis;   
+      previousMillis = currentMillis;
       if(errorstatus!=8)
       {
         digitalWrite(LED_WARN,!digitalRead(LED_WARN));
-        digitalWrite(LED_OK,LOW);  
+        digitalWrite(LED_OK,LOW);
       }
-      else 
+      else
       {
-        digitalWrite(LED_OK, !digitalRead(LED_OK)); 
-        digitalWrite(LED_WARN,LOW);    
+        digitalWrite(LED_OK, !digitalRead(LED_OK));
+        digitalWrite(LED_WARN,LOW);
       }
     }
   }
@@ -315,7 +315,7 @@ ISR(TIMER1_COMPA_vect)
   switch(txstatus) {
   case 0: // This is the optional delay between transmissions.
     txj++;
-    if(txj>(TXDELAY*RTTY_BAUD)) { 
+    if(txj>(TXDELAY*RTTY_BAUD)) {
       txj=0;
       txstatus=1;
     }
@@ -354,7 +354,7 @@ ISR(TIMER1_COMPA_vect)
     txj=0;
     break;
 
-  case 2: // Grab a char and lets go transmit it. 
+  case 2: // Grab a char and lets go transmit it.
     if ( txj < txstringlength)
     {
       txc = txstring[txj];
@@ -363,7 +363,7 @@ ISR(TIMER1_COMPA_vect)
       rtty_txbit (0); // Start Bit;
       txi=0;
     }
-    else 
+    else
     {
       txstatus=0; // Should be finished
       txj=0;
@@ -374,18 +374,18 @@ ISR(TIMER1_COMPA_vect)
     if(txi<ASCII)
     {
       txi++;
-      if (txc & 1) rtty_txbit(1); 
-      else rtty_txbit(0);	
+      if (txc & 1) rtty_txbit(1);
+      else rtty_txbit(0);
       txc = txc >> 1;
       break;
     }
-    else 
+    else
     {
       rtty_txbit (1); // Stop Bit
       txstatus=4;
       txi=0;
       break;
-    } 
+    }
   case 4:
     if(STOPBITS==2)
     {
@@ -477,7 +477,7 @@ void setGPS_DynamicModel6()
 void setGPS_GNSS()
 {
   // Sets CFG-GNSS to disable everything other than GPS GNSS
-  // solution. Failure to do this means GPS power saving 
+  // solution. Failure to do this means GPS power saving
   // doesn't work. Not needed for MAX7, needed for MAX8's
   int gps_set_sucess=0;
   uint8_t setgnss[] = {
@@ -511,7 +511,7 @@ void setGPS_DynamicModel3()
 }
 void setGps_MaxPerformanceMode() {
   //Set GPS for Max Performance Mode
-  uint8_t setMax[] = { 
+  uint8_t setMax[] = {
     0xB5, 0x62, 0x06, 0x11, 0x02, 0x00, 0x08, 0x00, 0x21, 0x91           }; // Setup for Max Power Mode
   sendUBX(setMax, sizeof(setMax)/sizeof(uint8_t));
 }
@@ -522,7 +522,7 @@ boolean getUBX_ACK(uint8_t *MSG) {
   uint8_t ackPacket[10];
   unsigned long startTime = millis();
 
-  // Construct the expected ACK packet    
+  // Construct the expected ACK packet
   ackPacket[0] = 0xB5;	// header
   ackPacket[1] = 0x62;	// header
   ackPacket[2] = 0x05;	// class
@@ -549,7 +549,7 @@ boolean getUBX_ACK(uint8_t *MSG) {
     }
 
     // Timeout if no valid response in 3 seconds
-    if (millis() - startTime > 3000) { 
+    if (millis() - startTime > 3000) {
       return false;
     }
 
@@ -558,9 +558,9 @@ boolean getUBX_ACK(uint8_t *MSG) {
       b = Serial.read();
 
       // Check that bytes arrive in sequence as per expected ACK packet
-      if (b == ackPacket[ackByteID]) { 
+      if (b == ackPacket[ackByteID]) {
         ackByteID++;
-      } 
+      }
       else {
         ackByteID = 0;	// Reset and look again, invalid order
       }
@@ -593,8 +593,8 @@ void blinkled(int blinks)
     wait(100);
     digitalWrite(LED_WARN,LOW);
     wait(100);
-  }    
-}    
+  }
+}
 
 void wait(unsigned long delaytime) // Arduino Delay doesn't get CPU Speeds below 8Mhz
 {
@@ -631,14 +631,14 @@ void gps_get_data()
 {
   Serial.flush();
   // Clear buf[i]
-  for(int i = 0;i<60;i++) 
+  for(int i = 0;i<60;i++)
   {
-    buf[i] = 0; // clearing buffer  
-  }  
+    buf[i] = 0; // clearing buffer
+  }
   int i = 0;
   unsigned long startTime = millis();
 
-  while ((i<60) && ((millis() - startTime) < 1000) ) { 
+  while ((i<60) && ((millis() - startTime) < 1000) ) {
     if (Serial.available()) {
       buf[i] = Serial.read();
       i++;
@@ -671,7 +671,7 @@ void checkDynamicModel() {
     if(navmode != 3)
     {
       setGPS_DynamicModel3();
-      errorstatus |=(1 << 3);  // Set Bit 3 indicating we are in pedestrian mode    
+      errorstatus |=(1 << 3);  // Set Bit 3 indicating we are in pedestrian mode
     }
   }
   else
@@ -684,8 +684,8 @@ void checkDynamicModel() {
   }
 }
 void setGPS_PowerSaveMode() {
-  // Power Save Mode 
-  uint8_t setPSM[] = { 
+  // Power Save Mode
+  uint8_t setPSM[] = {
     0xB5, 0x62, 0x06, 0x11, 0x02, 0x00, 0x08, 0x01, 0x22, 0x92           }; // Setup for Power Save Mode (Default Cyclic 1s)
   sendUBX(setPSM, sizeof(setPSM)/sizeof(uint8_t));
 }
@@ -706,7 +706,7 @@ void prepare_data() {
     {
       errorstatus &= ~(1 << 2); // Unset bit 2 indicating temp sensor is ok.
     }
-  } 
+  }
   gps_check_lock();
   gps_get_position();
   gps_get_time();
@@ -789,11 +789,11 @@ void gps_get_position()
     }
     else
     {
-      lon = (int32_t)buf[10] | (int32_t)buf[11] << 8 | 
+      lon = (int32_t)buf[10] | (int32_t)buf[11] << 8 |
         (int32_t)buf[12] << 16 | (int32_t)buf[13] << 24;
-      lat = (int32_t)buf[14] | (int32_t)buf[15] << 8 | 
+      lat = (int32_t)buf[14] | (int32_t)buf[15] << 8 |
         (int32_t)buf[16] << 16 | (int32_t)buf[17] << 24;
-      alt = (int32_t)buf[22] | (int32_t)buf[23] << 8 | 
+      alt = (int32_t)buf[22] | (int32_t)buf[23] << 8 |
         (int32_t)buf[24] << 16 | (int32_t)buf[25] << 24;
     }
     // 4 bytes of latitude/longitude (1e-7)
@@ -888,7 +888,7 @@ void tx_aprs()
     //0, 0, 0, 0,
     "WIDE1", 1, "WIDE2",1,
     //"WIDE2", 1,
-    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,http://habduino.org",
+    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,NCAEP goo.gl/NOMPWa",
     ax25_base91enc(slat, 4, aprs_lat),
     ax25_base91enc(slng, 4, aprs_lon),
     aprs_alt, stlm, comment,APRS_CALLSIGN, count, errorstatus,temperature1
@@ -902,7 +902,7 @@ void tx_aprs()
     //0, 0, 0, 0,
     "WIDE1", 1, "WIDE2",1,
     //"WIDE2", 1,
-    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i,%i'C,http://habduino.org",
+    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,NCAEP goo.gl/NOMPWa",
     ax25_base91enc(slat, 4, aprs_lat),
     ax25_base91enc(slng, 4, aprs_lon),
     aprs_alt, stlm, comment,APRS_CALLSIGN, count, errorstatus,temperature1,temperature2
@@ -1072,7 +1072,7 @@ void setMTX2Frequency()
   MTX2_EN.print(_mtx2command);
   delay(50);
   MTX2_EN.end();
-}  
+}
 
 uint16_t crccat(char *msg)
 {
@@ -1090,20 +1090,3 @@ uint16_t crccat(char *msg)
 
   return(x);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
