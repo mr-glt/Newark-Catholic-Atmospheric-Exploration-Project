@@ -21,7 +21,7 @@
 
 #ifndef __AX25MODEM_H
 #define __AX25MODEM_H
-#define APRS_TX_INTERVAL 1  // APRS TX Interval in minutes
+#define APRS_TX_INTERVAL 0.25  // APRS TX Interval in minutes
 #define APRS_CALLSIGN "CHANGEME"
 #define APRS_SSID     (11)
 
@@ -31,4 +31,3 @@ extern void ax25_frame(char *scallsign, char sssid, char *dcallsign, char dssid,
 extern char *ax25_base91enc(char *s, uint8_t n, uint32_t v);
 
 #endif
-
