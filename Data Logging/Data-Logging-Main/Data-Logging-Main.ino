@@ -69,7 +69,7 @@ void setup()
 	SD.begin(4); //Start SD
 
   //Print Header
-  dataFile = SD.open("datatest.csv", FILE_WRITE); //Open dataFile
+  dataFile = SD.open("datamain.csv", FILE_WRITE); //Open dataFile
 
   dataFile.println(","); //println is used to start a new row
   writeToSd("Timestamp");
@@ -95,7 +95,8 @@ void setup()
 
   /*Luminosity*/
   tsl.begin(); //Start Luminosity Sensor
-  configureLumin(); //Run Config Fucntion
+  tsl.enableAutoRange(true); /* Auto-gain ... switches automatically between 1x and 16x */
+  tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_13MS);      /* fast but low resolution */
   /*Magneto*/
   Wire.beginTransmission(magnetoAddress); //Open Communication with HMC5883
   Wire.write(0x02); //Select Mode Register
@@ -114,7 +115,7 @@ void loop(){
   /*Time*/
 	DateTime now = rtc.now(); //Define now
 
-	dataFile = SD.open("datatest.csv", FILE_WRITE); //Open dataFile
+	dataFile = SD.open("datamain.csv", FILE_WRITE); //Open dataFile
   //Print Time
   dataFile.print(now.month(), DEC);
   dataFile.print("/");
@@ -200,7 +201,7 @@ void loop(){
 
   /*Luminosity*/
 
-  sensors_event_t luminEvent; //New Lumin Even
+  sensors_event_t luminEvent; //New Lumin Event
   tsl.getEvent(&luminEvent); //Get Reading
 
   if (luminEvent.light)
@@ -211,7 +212,7 @@ void loop(){
   }
   else
   {
-    Serial.println("Sensor overload"); //Sensor is Over Saturalted
+    Serial.println("Sensor (Un)Overload"); //Sensor is Over Saturated
   }
 
 	/*UV Sensor*/
@@ -260,18 +261,6 @@ void loop(){
 	dataFile.close(); //Close dataFile
 
   delay(1000); //Wait 1 Second before taking next readings.
-}
-
-
-void configureLumin(void)
-{
-  // tsl.setGain(TSL2561_GAIN_1X);      /* No gain ... use in bright light to avoid sensor saturation */
-  // tsl.setGain(TSL2561_GAIN_16X);     /* 16x gain ... use in low light to boost sensitivity */
-  tsl.enableAutoRange(true);            /* Auto-gain ... switches automatically between 1x and 16x */
-
-  tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_13MS);      /* fast but low resolution */
-  // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_101MS);  /* medium resolution and speed   */
-  // tsl.setIntegrationTime(TSL2561_INTEGRATIONTIME_402MS);  /* 16-bit data but slowest conversions */
 }
 
 /*Values*/
