@@ -24,6 +24,7 @@
 
  //SDcard
  File dataFile;
+ Sd2Card card;
 
  //UV
  int UVOUT = A0; //Output from the ML8511
@@ -40,6 +41,11 @@ int HIH4030_Pin = A3; //Output from HIH-4030
 
 /*End Deffinations*/
 
+/*This Function Combines the Writing of Data and Comma in to One Function to Save Space*/
+void writeToSd(char* dataToWrite){
+  dataFile.print(dataToWrite);
+  dataFile.print(","); //Commas are used to declare a new cell in .CSV (Comma Separated Values)
+}
 
 void setup()
 {
@@ -66,33 +72,20 @@ void setup()
   dataFile = SD.open("datamain.csv", FILE_WRITE); //Open dataFile
 
   dataFile.println(","); //println is used to start a new row
-  dataFile.print("Timestamp");
-  dataFile.print(","); //Commas are used to declare a new cell in .CSV (Comma Separated Values)
-  dataFile.print("Absolute Pressure(mB)");
-  dataFile.print(",");
-  dataFile.print("External Temp C");
-  dataFile.print(",");
-  dataFile.print("Computed altitude(m)");
-  dataFile.print(",");
-  dataFile.print("Ax");
-  dataFile.print(",");
-  dataFile.print("Ay");
-  dataFile.print(",");
-  dataFile.print("Az");
-  dataFile.print(",");
-  dataFile.print("Relative Humidity");
-  dataFile.print(",");
-  dataFile.print("Luminosity");
-  dataFile.print(",");
-  dataFile.print("UV (mW/cm^2)");
-  dataFile.print(",");
-  dataFile.print("Mx");
-  dataFile.print(",");
-  dataFile.print("My");
-  dataFile.print(",");
+  writeToSd("Timestamp");
+  writeToSd("Absolute Pressure(mB)");
+  writeToSd("External Temp C");
+  writeToSd("Computed Altitude(m)");
+  writeToSd("Ax");
+  writeToSd("Ay");
+  writeToSd("Az");
+  writeToSd("Relative Humidity");
+  writeToSd("Luminosity");
+  writeToSd("UV (mW/cm^2)");
+  writeToSd("Mx");
+  writeToSd("My");
   dataFile.print("Mz");
-  dataFile.println(",");
-
+  dataFile.println(","); //Do not call above function because we need to print a new line.
 
 	dataFile.close(); //Close dataFile
 
@@ -113,7 +106,12 @@ void setup()
 
 void loop(){
 	Serial.println();
-
+  /*Check that the SdCard is Working*/
+  if (!card.init(SPI_HALF_SPEED, 4)) {
+    Serial.println("SDCard: Not Present");
+  } else {
+    Serial.println("SDCard: Ok");
+  }
   /*Time*/
 	DateTime now = rtc.now(); //Define now
 
@@ -256,14 +254,13 @@ void loop(){
   dataFile.print(",");
   dataFile.print(y);
   dataFile.print(",");
-  dataFile.print(z);
-  dataFile.println(",");
+  dataFile.println(z);
 
   /*Odds and Ends*/
   Serial.println(); //Print a line to show separate readings
 	dataFile.close(); //Close dataFile
 
-  delay(500); //Wait 0.5 Seconds before taking next readings.
+  delay(1000); //Wait 1 Second before taking next readings.
 }
 
 /*Values*/
@@ -287,8 +284,7 @@ float mapfloat(float x, float in_min, float in_max, float out_min, float out_max
 
 //Used to find average of readings of humidity sensor
 float getHumidity(float degreesCelsius){
-  float supplyVolt = 5.0; //Need to change to reading
-
+  float supplyVolt = 5.0;
   int HIH4030_Value = analogRead(HIH4030_Pin);
   float voltage = HIH4030_Value/1023. * supplyVolt; // convert to voltage value
 
