@@ -21,8 +21,8 @@
 
 #ifndef __AX25MODEM_H
 #define __AX25MODEM_H
-#define APRS_TX_INTERVAL 0.25  // APRS TX Interval in minutes
-#define APRS_CALLSIGN "CHANGEME"
+#define APRS_TX_INTERVAL 1.00  // APRS TX Interval in minutes
+#define APRS_CALLSIGN "WD8TA"
 #define APRS_SSID     (11)
 
 extern void ax25_init(void);

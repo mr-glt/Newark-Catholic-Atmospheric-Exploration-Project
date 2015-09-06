@@ -66,7 +66,7 @@
 /* BITS YOU WANT TO AMEND */
 
 #define MTX2_FREQ 434.485 // format 434.XXX
-char callsign[9] = "CHANGEME";  // MAX 9 CHARACTERS!!
+char callsign[9] = "WD8TA";  // MAX 9 CHARACTERS!!
 
 /* BELOW HERE YOU PROBABLY DON'T WANT TO BE CHANGING STUFF */
 
@@ -884,14 +884,14 @@ void tx_aprs()
   {
     ax25_frame(
     APRS_CALLSIGN, APRS_SSID,
-    "WP4NJQ", 0,
+    "APRS", 0,
     //0, 0, 0, 0,
     "WIDE1", 1, "WIDE2",1,
     //"WIDE2", 1,
-    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,NCAEP goo.gl/NOMPWa",
+    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C, NCAEP",
     ax25_base91enc(slat, 4, aprs_lat),
     ax25_base91enc(slng, 4, aprs_lon),
-    aprs_alt, stlm, comment,APRS_CALLSIGN, count, errorstatus,temperature1
+    aprs_alt, stlm, "http://goo.gl/NOMPWa",APRS_CALLSIGN, count, errorstatus,temperature1
       );
   }
   else
@@ -902,10 +902,10 @@ void tx_aprs()
     //0, 0, 0, 0,
     "WIDE1", 1, "WIDE2",1,
     //"WIDE2", 1,
-    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,NCAEP goo.gl/NOMPWa",
+    "!/%s%sO   /A=%06ld|%s|%s/%s,%d,%i,%i'C,NCAEP",
     ax25_base91enc(slat, 4, aprs_lat),
     ax25_base91enc(slng, 4, aprs_lon),
-    aprs_alt, stlm, comment,APRS_CALLSIGN, count, errorstatus,temperature1,temperature2
+    aprs_alt, stlm, "http://goo.gl/NOMPWa",APRS_CALLSIGN, count, errorstatus,temperature1,temperature2
       );
   }
   seq++;
