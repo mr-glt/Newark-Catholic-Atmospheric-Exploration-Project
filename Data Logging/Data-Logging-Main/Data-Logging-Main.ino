@@ -1,5 +1,3 @@
-/* DISCLAIMER: This code is untested for use on an actual high altitude flight.*/
-
 //Imports
 #include <Adafruit_ADXL345_U.h> //Accelrometer
 #include <Adafruit_Sensor.h> //Adafruit Products
