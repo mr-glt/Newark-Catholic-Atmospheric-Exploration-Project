@@ -1,7 +1,5 @@
 This is code that powers the data and tracking systems of NCAEP. This repository is broken down into the code for the data logger and code for the tracking. 
 
-More info on the project [Here](http://balloon.ncrobotics.me/).
-
 ####Sensors Used
 1. ADXL345
 2. HIH-4030
